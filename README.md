@@ -1,1 +1,2 @@
-# project-sunrise
+# Sunbird - Shiksha UI
+
