@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { QrReader } from "react-qr-reader";
 import styles from "./QrScanner.module.css";
 import { AppBar } from "@shiksha/common-lib";
@@ -14,6 +14,24 @@ function App() {
     navigate("/mylearning");
   };
 
+  useEffect(() => {
+    const persistedData = localStorage.getItem("qrData");
+    if (persistedData) {
+      setData(persistedData);
+    }
+  }, []);
+
+  //The first useEffect hook runs only once, on component mount.
+  // It retrieves the persisted data from localStorage using the key "qrData"
+  //and sets the data state if it exists.
+
+  useEffect(() => {
+    localStorage.setItem("qrData", data);
+  }, [data]);
+
+  //The second useEffect hook is responsible for updating the persisted data whenever the data state changes.
+  // It watches the data dependency and stores the updated value in localStorage with the key "qrData".
+
   return (
     <React.Fragment>
       <button className={styles.button} onClick={myRegister}>
@@ -21,7 +39,7 @@ function App() {
       </button>
       <div className={styles.qrreader}>
         <div className={styles.heading}>Scan QR Code</div>
-        <div>{data}</div>
+        <div>Last Scanned : {data}</div>
         <QrReader
           className={styles.scanner}
           scanDelay={500}
