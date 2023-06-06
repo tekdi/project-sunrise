@@ -3,15 +3,13 @@ rm -rf prod-build
 mkdir prod-build
 mkdir prod-build/modules
 # find packages \( ! -path packages/common-lib -o ! -path packages/teacher-app \) -type d -exec bash -c '
-find packages \( -path "packages/core" -o -path "packages/studentprogram" -o -path "packages/reports" \) -type d -exec bash -c '
-
-for f  do
+find packages \( -path "packages/core" -o -path "packages/studentprogram" -o -path "packages/reports" \) -type d -exec bash -c 'for f  do
     # echo $f
     if [ $f != "packages/common-lib" ] &&  [ $f != "packages/teacher-app" ] && [ $f != "packages/student-app" ]; then
         echo "Processing ${f//packages\//}"
         cp -rf "$f/build" "prod-build/modules/${f//packages\//}"
     fi
-done 
+done
 ' sh {} +
 cp -r  packages/mylearning/build/* prod-build/
 # cp -r  packages/players/* prod-build/
