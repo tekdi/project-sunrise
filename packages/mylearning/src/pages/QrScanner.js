@@ -11,7 +11,7 @@ function App() {
 
   const navigate = useNavigate();
   const myRegister = () => {
-    navigate("/mylearning");
+    navigate("/");
   };
 
   useEffect(() => {

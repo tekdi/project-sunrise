@@ -7,6 +7,8 @@ import CourseDetails from "./pages/CourseDetails";
 import VideoList from "./pages/VideoList";
 import VideoDetails from "./pages/VideoDetails";
 import QrScanner from "./pages/QrScanner";
+import HomePage from "pages/HomePage";
+import VoiceSearch from "./pages/VoiceSearch";
 const StudentprogramLessonList = React.lazy(() =>
   import("studentprogram/Lessons")
 );
@@ -17,6 +19,11 @@ function App() {
   );
   const routes = [
     {
+      moduleName: "homepage",
+      path: "/",
+      component: HomePage,
+    },
+    {
       moduleName: "mylearning",
       path: "/mylearning",
       component: CourseList,
@@ -25,6 +32,11 @@ function App() {
       moduleName: "qrscanner",
       path: "/qrscanner",
       component: QrScanner,
+    },
+    {
+      moduleName: "voicesearch",
+      path: "/voicesearch",
+      component: VoiceSearch,
     },
     // {
     //   moduleName: "mylearning",
@@ -62,11 +74,11 @@ function App() {
       path: "/mylearning",
       component: CourseList,
     },
-    {
-      moduleName: "mylearning",
-      path: "/",
-      component: CourseList,
-    },
+    // {
+    //   moduleName: "mylearning",
+    //   path: "/",
+    //   component: CourseList,
+    // },
   ];
   const LoginComponent = React.lazy(() => import("core/Login"));
   const skipLogin = !(

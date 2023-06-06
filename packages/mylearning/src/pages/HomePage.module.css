@@ -1,0 +1,24 @@
+.bdiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  margin-top: 20px;
+  background-color: #f87558;
+  color: white;
+  border-color: #f87558;
+  border-width: 0;
+  border-radius: 5px;
+  width: 300px;
+  height: 50px;
+  font-family: "Amazon Ember", sans-serif;
+  font-weight: 500;
+  font-size: large;
+}
+
+.button:hover {
+  background-color: #d9654c;
+}
