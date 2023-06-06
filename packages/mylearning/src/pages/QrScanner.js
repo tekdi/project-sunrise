@@ -42,6 +42,7 @@ function App() {
         <div>Last Scanned : {data}</div>
         <QrReader
           className={styles.scanner}
+          constraints={{ facingMode: "environment" }}
           scanDelay={500}
           onResult={(result, error) => {
             if (!!result) {
