@@ -31,7 +31,7 @@ import manifest from "../manifest.json";
 import { defaultInputs } from "config/mylearningConfig";
 import MyCoursesComponent from "components/MyCoursesComponent";
 import moment from "moment";
-
+import { useNavigate } from "react-router-dom";
 const sortArray = [
   {
     title: "By Difficulty",
@@ -101,6 +101,7 @@ export default function MyLearning({ footerLinks, appName }) {
   const [showModalSort, setShowModalSort] = React.useState(false);
   const [courseStartTime, setCourseStartTime] = React.useState();
   const [filters, setFilters] = React.useState();
+  const navigate = useNavigate();
 
   const { state } = useParams();
   const userId = localStorage.getItem("id");
