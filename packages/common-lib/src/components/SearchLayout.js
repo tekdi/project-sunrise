@@ -188,9 +188,9 @@ export default function SearchLayout({
               color='button.500'
               onPress={(e) => {
                 if (onCloseSearch) {
-                  onCloseSearch()
-                } else {
-                  navigate(-1)
+                  //   onCloseSearch()
+                  // } else {
+                  navigate('/')
                 }
               }}
             />
@@ -203,7 +203,7 @@ export default function SearchLayout({
                   {status === 'recording' ? (
                     <IconByName
                       _icon={{ size: '23' }}
-                      color='coolGray.500'
+                      style={{ color: '#F91927' }}
                       w='1/8'
                       name='StopLineIcon'
                       pl='0'
@@ -212,7 +212,7 @@ export default function SearchLayout({
                   ) : (
                     <IconByName
                       _icon={{ size: '23' }}
-                      color='coolGray.500'
+                      style={{ color: '#008AEC' }}
                       w='1/8'
                       name='MicLineIcon'
                       pl='0'
@@ -227,8 +227,9 @@ export default function SearchLayout({
               placeholder={
                 searchPlaceholder
                   ? searchPlaceholder
-                  : `Type ${minStringLenght ? 'min ' + minStringLenght : ''}
-                 to search `
+                  : //   : `Type ${minStringLenght ? 'min ' + minStringLenght : ''}
+                    //  to search `
+                    `Try to speak something by clicking on the mic `
                 // ai4bharat ? ai4bharat : searchPlaceholder
               }
             />
@@ -247,15 +248,31 @@ export default function SearchLayout({
             w={width}
           >
             <Stack space='10' alignItems='center'>
-              <IconByName
-                _icon={{ size: '100' }}
-                color='coolGray.200'
-                w='1/8'
-                name='FileSearchLineIcon'
-                pl='0'
-                onPress={(e) => setSearchInput(false)}
-              />
-              <Box _text={{ color: 'coolGray.300' }}>{notFoundMessage}</Box>
+              {status === 'recording' ? (
+                <React.Fragment>
+                  <IconByName
+                    _icon={{ size: '100' }}
+                    style={{ color: '#F91927' }}
+                    w='1/8'
+                    name='MicLineIcon'
+                    pl='0'
+                    onPress={() => controlAudio('inactive')}
+                  />
+                  <div>Press again to stop recording</div>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <IconByName
+                    _icon={{ size: '100' }}
+                    style={{ color: '#008AEC' }}
+                    w='1/8'
+                    name='MicLineIcon'
+                    pl='0'
+                    onPress={() => controlAudio('recording')}
+                  />
+                  <div>Press the mic to start recording</div>
+                </React.Fragment>
+              )}
             </Stack>
           </Center>
         )}

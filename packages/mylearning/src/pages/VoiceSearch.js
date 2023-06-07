@@ -32,7 +32,7 @@ import { defaultInputs } from "config/mylearningConfig";
 import MyCoursesComponent from "components/MyCoursesComponent";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-
+import HomePage from "./HomePage";
 const sortArray = [
   {
     title: "By Difficulty",
@@ -103,6 +103,7 @@ export default function MyLearning({ footerLinks, appName }) {
   const [courseStartTime, setCourseStartTime] = React.useState();
   const [filters, setFilters] = React.useState();
   const navigate = useNavigate();
+
   const { state } = useParams();
   const userId = localStorage.getItem("id");
   const handleSearchState = (item) => {
@@ -130,7 +131,7 @@ export default function MyLearning({ footerLinks, appName }) {
 
   const handleBackButton = () => {
     leavePageCaptureEvent();
-    navigate(-1);
+    navigate("./");
   };
 
   React.useEffect(async () => {
@@ -186,6 +187,15 @@ export default function MyLearning({ footerLinks, appName }) {
     );
     setCourses(data.slice(0, 10));
   }, [search, filterObject]);
+
+  React.useLayoutEffect(() => {
+    simulateEvent();
+  }, []);
+
+  const simulateEvent = () => {
+    console.log("Event simulated");
+    setSearchState(true);
+  };
 
   const getTitle = () => {
     if (state === ONGOING) {
@@ -267,14 +277,13 @@ export default function MyLearning({ footerLinks, appName }) {
       }}
       _appBar={{
         languages: manifest.languages,
-
         isEnableSearchBtn: true,
         setSearch,
         setSearchState: handleSearchState,
         onPressBackButton: handleBackButton,
         isBackButtonShow: true,
-        // isLanguageIcon: true,
-        // isQRcodebutton: true,
+        isLanguageIcon: true,
+        isQRcodebutton: true,
         titleComponent: <NameTag />,
       }}
       subHeader={<H2 textTransform="inherit">{getSubTitle()}</H2>}

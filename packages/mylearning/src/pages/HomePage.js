@@ -32,7 +32,7 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
       }}
       _appBar={{ languages: manifest.languages }}
       subHeader={
-        <H2 textTransform="inherit">{t("SEARCH_ALL_TRAINING_COURSES")}</H2>
+        <H2 textTransform="inherit">{t("SEARCH ALL TRAINING COURSES")}</H2>
       }
       _subHeader={{ bg: colors.cardBg }}
       _footer={footerLinks}
