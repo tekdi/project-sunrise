@@ -14,7 +14,7 @@ import {
   NameTag,
   arryaFilters,
 } from "@shiksha/common-lib";
-import { useTranslation } from "react-i18next";
+import { useSSR, useTranslation } from "react-i18next";
 import {
   Actionsheet,
   Box,
@@ -32,6 +32,9 @@ import { defaultInputs } from "config/mylearningConfig";
 import MyCoursesComponent from "components/MyCoursesComponent";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import styles from "./MyCourses.module.css";
+import Select from "react-select";
+import { useState } from "react";
 const sortArray = [
   {
     title: "By Difficulty",
@@ -86,11 +89,26 @@ const sortArray = [
   },
 ];
 
+const language = [
+  { value: "Letters", label: "Letters" },
+  { value: "Words", label: "Words" },
+  { value: "Short Para", label: "Short Para" },
+  { value: "Long Para", label: "Long Para" },
+];
+const resource = [
+  { value: "Read", label: "Read" },
+  { value: "Learn", label: "Learn" },
+];
+
 const ONGOING = "Ongoing";
 const ASSIGNED = "Assigned";
 const COMPLETED = "Completed";
 
-export default function MyLearning({ footerLinks, appName }) {
+export default function MyCourses({ footerLinks, appName }) {
+  const [isVisible, setIsVisible] = useState(true);
+  const handleButtonClick = () => {
+    setIsVisible(false);
+  };
   const { t } = useTranslation();
   const [filterObject, setFilterObject] = React.useState({});
   const [courses, setCourses] = React.useState([]);
@@ -131,6 +149,15 @@ export default function MyLearning({ footerLinks, appName }) {
   const handleBackButton = () => {
     leavePageCaptureEvent();
     navigate(-1);
+  };
+
+  React.useEffect(() => {
+    simulateEvent();
+  });
+
+  const simulateEvent = () => {
+    console.log(filterObject);
+    console.log("My use Effect");
   };
 
   React.useEffect(async () => {
@@ -177,15 +204,6 @@ export default function MyLearning({ footerLinks, appName }) {
   }, []);
 
   React.useEffect(() => {
-    simulateEvent();
-  });
-
-  const simulateEvent = () => {
-    console.log(filterObject);
-    console.log("My use Effect");
-  };
-
-  React.useEffect(() => {
     const searchData = search ? search.toLowerCase() : "";
     const apiData = arryaFilters(apiCourses, filterObject);
     const data = apiData.filter(
@@ -197,27 +215,11 @@ export default function MyLearning({ footerLinks, appName }) {
   }, [search, filterObject]);
 
   const getTitle = () => {
-    if (state === ONGOING) {
-      return t("ALL_ONGOING_COURSES");
-    } else if (state === ASSIGNED) {
-      return t("ALL_ASSIGNED_COURSES");
-    } else if (state === COMPLETED) {
-      return t("ALL_COMPLETED_COURSES");
-    } else {
-      return t("ALL_COURSES");
-    }
+    return t("My Courses");
   };
 
   const getSubTitle = () => {
-    if (state === ONGOING) {
-      return t("SEE_ALL_ONGOING_COURSES");
-    } else if (state === ASSIGNED) {
-      return t("SEE_ALL_ASSIGNED_COURSES");
-    } else if (state === COMPLETED) {
-      return t("SEE_ALL_COMPLETED_COURSES");
-    } else {
-      return t("SEE_ALL_COURSES");
-    }
+    return t("See my courses here");
   };
 
   if (loading) {
@@ -248,59 +250,123 @@ export default function MyLearning({ footerLinks, appName }) {
     );
   }
 
+  const medium = (selectedOptions) => {
+    let newfilter = selectedOptions.map((option) => option.value);
+    console.log(newfilter);
+
+    // new filter has selected Array data
+
+    const data = selectedOptions;
+
+    // existing setFilterObject state accepts Array data as an object with a property medium refer log in simulateevent()
+
+    const transformedData = {
+      medium: data.map((item) => item.value),
+    };
+
+    //data transformed into object with property medium
+
+    console.log("transformedData");
+
+    console.log(transformedData);
+
+    setFilterObject(transformedData);
+  };
+
+  const resourceType = (selectedOptions) => {
+    let newfilter = selectedOptions.map((option) => option.value);
+    console.log(newfilter);
+
+    // new filter has selected Array data
+
+    const data = selectedOptions;
+
+    // existing setFilterObject state accepts Array data as an object with a property medium refer log in simulateevent()
+
+    const transformedData = {
+      resourceType: data.map((item) => item.value),
+    };
+
+    //data transformed into object with property medium
+
+    console.log("transformedData");
+
+    console.log(transformedData);
+
+    setFilterObject(transformedData);
+  };
+
   return (
-    <Layout
-      _header={{
-        title: getTitle(),
-        // iconComponent: (
-        //   <Button
-        //     rounded="full"
-        //     variant="outline"
-        //     bg={"mylearning.primaryLight"}
-        //     px={4}
-        //     py={1}
-        //     rightIcon={
-        //       <IconByName
-        //         name="ArrowDownSLineIcon"
-        //         isDisabled
-        //         _icon={{ size: 20 }}
-        //       />
-        //     }
-        //     onPress={(e) => setShowModalSort(true)}
-        //   >
-        //     <BodyLarge textTransform="capitalize" color={"mylearning.primary"}>
-        //       {t("SORT")}
-        //     </BodyLarge>
-        //   </Button>
-        // ),
-      }}
-      _appBar={{
-        languages: manifest.languages,
-        isEnableSearchBtn: true,
-        setSearch,
-        setSearchState: handleSearchState,
-        onPressBackButton: handleBackButton,
-        isBackButtonShow: true,
-        isLanguageIcon: true,
-        isQRcodebutton: true,
-        titleComponent: <NameTag />,
-      }}
-      subHeader={<H2 textTransform="inherit">{getSubTitle()}</H2>}
-      _subHeader={{ bg: "mylearning.cardBg" }}
-      _footer={footerLinks}
-    >
-      <Children
-        {...{
-          courses,
-          setFilterObject,
-          showModalSort,
-          setShowModalSort,
-          appName,
-          state,
-          filters,
+    <React.Fragment>
+      {isVisible && (
+        <div className={styles.selectouterdiv}>
+          <div className={styles.selectdiv}>
+            <div className={styles.selectdiscover}>
+              To discover relevant content update the following details
+            </div>
+            <h3 className={styles.selectdiscover}>Select Language</h3>
+            <Select options={language} isMulti onChange={medium} />
+            <h3 className={styles.selectdiscover}>Select Resource Type</h3>
+            <Select options={resource} isMulti onChange={resourceType} />
+            <button onClick={handleButtonClick} className={styles.donebutton}>
+              Done
+            </button>
+          </div>
+        </div>
+      )}
+      <Layout
+        _header={{
+          title: getTitle(),
+          // iconComponent: (
+          //   <Button
+          //     rounded="full"
+          //     variant="outline"
+          //     bg={"mylearning.primaryLight"}
+          //     px={4}
+          //     py={1}
+          //     rightIcon={
+          //       <IconByName
+          //         name="ArrowDownSLineIcon"
+          //         isDisabled
+          //         _icon={{ size: 20 }}
+          //       />
+          //     }
+          //     onPress={(e) => setShowModalSort(true)}
+          //   >
+          //     <BodyLarge textTransform="capitalize" color={"mylearning.primary"}>
+          //       {t("SORT")}
+          //     </BodyLarge>
+          //   </Button>
+          // ),
         }}
-      />
-    </Layout>
+        _appBar={{
+          languages: manifest.languages,
+          isEnableSearchBtn: true,
+          setSearch,
+          setSearchState: handleSearchState,
+          onPressBackButton: handleBackButton,
+          isBackButtonShow: true,
+          isLanguageIcon: true,
+          isQRcodebutton: true,
+          titleComponent: <NameTag />,
+        }}
+        subHeader={<H2 textTransform="inherit">{getSubTitle()}</H2>}
+        _subHeader={{ bg: "mylearning.cardBg" }}
+        _footer={footerLinks}
+      >
+        <Children
+          {...{
+            courses,
+            setFilterObject,
+            showModalSort,
+            setShowModalSort,
+            appName,
+            state,
+            filters,
+          }}
+        />
+      </Layout>
+    </React.Fragment>
   );
 }
 
@@ -327,15 +393,15 @@ const Children = ({
     setSortData(newSort);
   };
 
-  const handleFilter = (obejct) => {
-    // const telemetryData = telemetryFactory.interact({
-    //   appName,
-    //   type: "Course-Filter",
-    //   filterObject: obejct,
-    // });
-    // capture("INTERACT", telemetryData);
-    setFilterObject(obejct);
-  };
+  //   const handleFilter = (obejct) => {
+  //     // const telemetryData = telemetryFactory.interact({
+  //     //   appName,
+  //     //   type: "Course-Filter",
+  //     //   filterObject: obejct,
+  //     // });
+  //     // capture("INTERACT", telemetryData);
+  //     setFilterObject(obejct);
+  //   };
 
   const getState = () => {
     if (state === ONGOING) {
@@ -349,13 +415,13 @@ const Children = ({
 
   return (
     <Stack>
-      <FilterButton
+      {/* <FilterButton
         getObject={handleFilter}
         _box={{ pt: 5, px: 5 }}
         _actionSheet={{ bg: "mylearning.cardBg" }}
         resetButtonText={t("COLLAPSE")}
         filters={filters}
-      />
+      /> */}
       <VStack>
         <Box
           bg={"mylearning.white"}

@@ -24,6 +24,9 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
   const voice = () => {
     navigate("/voicesearch");
   };
+  const preference = () => {
+    navigate("/mycourses");
+  };
 
   return (
     <Layout
@@ -64,6 +67,9 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
           {" "}
           <button onClick={qrscanner} className={styles.button}>
             QR Search
+          </button>
+          <button onClick={preference} className={styles.button}>
+            Select Course by Preference
           </button>
         </div>
       </VStack>
