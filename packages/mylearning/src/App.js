@@ -9,6 +9,7 @@ import VideoDetails from "./pages/VideoDetails";
 import QrScanner from "./pages/QrScanner";
 import HomePage from "pages/HomePage";
 import VoiceSearch from "./pages/VoiceSearch";
+import MyCourses from "pages/MyCourses";
 const StudentprogramLessonList = React.lazy(() =>
   import("studentprogram/Lessons")
 );
@@ -37,6 +38,11 @@ function App() {
       moduleName: "voicesearch",
       path: "/voicesearch",
       component: VoiceSearch,
+    },
+    {
+      moduleName: "mycourses",
+      path: "/mycourses",
+      component: MyCourses,
     },
     // {
     //   moduleName: "mylearning",
