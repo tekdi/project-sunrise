@@ -43,6 +43,28 @@ export default function LessonList({ footerLinks }) {
   const navigate = useNavigate();
   const [trackData, setTrackData] = React.useState();
   const [loading, setLoading] = React.useState(true);
+  const setLessonData = async (id) => {
+    let resultData = await courseRegistryService.getOne({
+      id: id,
+      adapter: "diksha",
+      coreData: true,
+      type: "assessment",
+    });
+
+    let instructionData = await courseRegistryService.courseTrackingRead({
+      id,
+    });
+    const newData = {
+      ...resultData,
+      instructions: instructionData?.instructions
+        ? instructionData?.instructions
+        : {},
+    };
+    setLesson(newData);
+  };
+  React.useLayoutEffect(() => {
+    console.log("Lesson List Page");
+  });
 
   React.useEffect(async () => {
     try {
@@ -54,52 +76,20 @@ export default function LessonList({ footerLinks }) {
           "QuestionSetImage",
         ].includes(type)
       ) {
-        let resultData = await courseRegistryService.getOne({
-          id: id,
-          adapter: "diksha",
-          coreData: true,
-          type: "assessment",
-        });
-
-        let instructionData = await courseRegistryService.courseTrackingRead({
-          id,
-        });
-        setLesson({
-          ...resultData,
-          instructions: instructionData?.instructions
-            ? instructionData?.instructions
-            : {},
-        });
-      } else if (["Content"].includes(type)) {
-        let resultData = await courseRegistryService.getContent({
-          id: id,
-          adapter: "diksha",
-          coreData: true,
-          type: "resource",
-        });
-
-        let instructionData = await courseRegistryService.courseTrackingRead({
-          id,
-        });
-        setLesson({
-          ...resultData,
-          instructions: instructionData?.instructions
-            ? instructionData?.instructions
-            : {},
-        });
+        setLessonData(id);
       } else if (["course", "Course"].includes(type)) {
         const data = await courseRegistryService.moduleTracking({
           userId: localStorage.getItem("id"),
         });
         setModuleTracking(data);
-        const dataCour = await courseRegistryService.getOne({
-          id: id,
-          adapter: "diksha",
-          coreData: "withLesonFilter",
-          type: "course",
-        });
-        console.log("dataCour", dataCour);
-        setLessons(dataCour);
+        setLessons(
+          await courseRegistryService.getOne({
+            id: id,
+            adapter: "diksha",
+            coreData: "withLesonFilter",
+            type: "course",
+          })
+        );
       }
       setLoading(false);
     } catch (e) {
@@ -112,13 +102,9 @@ export default function LessonList({ footerLinks }) {
     setLesson();
     setLessonId();
     if (
-      [
-        "assessment",
-        "SelfAssess",
-        "QuestionSet",
-        "QuestionSetImage",
-        "Content",
-      ].includes(type)
+      ["assessment", "SelfAssess", "QuestionSet", "QuestionSetImage"].includes(
+        type
+      )
     ) {
       navigate(-1);
     }
@@ -171,20 +157,22 @@ export default function LessonList({ footerLinks }) {
         subject: lessons?.subject?.join(","),
       };
     }
-    // console.log({ data });
     courseRegistryService.lessontracking(data);
   };
 
   React.useEffect(async () => {
     if (lessonId) {
-      let resultData = await courseRegistryService.getContent({
-        id: lessonId?.identifier,
-        adapter: "diksha",
-      });
-      setLesson(resultData);
+      if (lessonId.mimeType === "application/vnd.sunbird.questionset") {
+        setLessonData(lessonId?.identifier);
+      } else {
+        const resultData = await courseRegistryService.getContent({
+          id: lessonId?.identifier,
+          adapter: "diksha",
+        });
+        setLesson(resultData);
+      }
     }
   }, [lessonId]);
-
   if (lesson?.trakingData?.length > 0) {
     return (
       <Loading
@@ -256,6 +244,15 @@ export default function LessonList({ footerLinks }) {
                   ) {
                     handleTrackData(data);
                   } else if (
+                    ["application/vnd.sunbird.questionset"].includes(
+                      lesson?.mimeType
+                    )
+                  ) {
+                    handleTrackData(
+                      data,
+                      "application/vnd.sunbird.questionset"
+                    );
+                  } else if (
                     [
                       "application/pdf",
                       "video/mp4",
@@ -300,14 +297,34 @@ export default function LessonList({ footerLinks }) {
       _header={{
         title: lessons?.subject?.join(","),
         subHeadingComponent: (
-          <Breadcrumb data={[{ title: t("HOME"), link: "/" }, lessons?.name]} />
+          <Breadcrumb
+            data={[
+              { title: t("HOME"), link: "/" },
+              { title: t("SUBJECTS"), link: "/studentprogram/subjects" },
+              {
+                title: lessons?.subject?.join(","),
+                link: `/studentprogram/${lessons?.subject?.[0]}`,
+              },
+              lessons?.name,
+            ]}
+          />
         ),
       }}
       _appBar={{
         languages: manifest.languages,
-        isBackButtonShow: true,
+        isBackButtonShow: false,
         isLanguageIcon: true,
         titleComponent: <NameTag />,
+        LeftIcon: (
+          <HStack space={2} alignItems="center">
+            <Avatar
+              rounded={0}
+              _image={{ rounded: 0 }}
+              style={{ borderRadius: 0 }}
+              source={require("../assets/images/TSHeader.jpg")}
+            />
+          </HStack>
+        ),
       }}
       _footer={footerLinks}
     >
@@ -317,7 +334,6 @@ export default function LessonList({ footerLinks }) {
             const moduleTrackingData = moduleTracking.find(
               (e) => e.moduleId === item.identifier
             );
-
             return (
               <Collapsible
                 key={index}
@@ -413,7 +429,7 @@ export default function LessonList({ footerLinks }) {
                               "application/vnd.sunbird.question",
                               "application/vnd.sunbird.questionset",
                             ].includes(subItem?.mimeType) ? (
-                            "QUML"
+                            <IconByName name="PlayFillIcon" isDisabled />
                           ) : ["application/vnd.ekstep.h5p-archive"].includes(
                               subItem?.mimeType
                             ) ? (
@@ -485,7 +501,6 @@ const LessonResultPage = ({
   type,
   setTrackData,
 }) => {
-  // console.log(data);
   const navigate = useNavigate();
   const score = trackData.reduce((old, newData) => old + newData?.score, 0);
   const average = (score * 100) / data?.totalScore;
@@ -537,7 +552,6 @@ const LessonResultPage = ({
               "SelfAssess",
               "QuestionSet",
               "QuestionSetImage",
-              "Content",
             ].includes(type)
           ) {
             navigate(-1);
@@ -560,7 +574,6 @@ const LessonResultPage = ({
               "SelfAssess",
               "QuestionSet",
               "QuestionSetImage",
-              "Content",
             ].includes(type)
           ) {
             navigate(-1);
@@ -583,9 +596,9 @@ const LessonLandingPage = ({ subject, data, setLessonLandingPage }) => {
           color="selfassesment.primary"
           name="FilePaper2LineIcon"
         />
-        <H1 color="selfassesment.darkGray5">{data?.name}</H1>
+        <H1 color="selfassesment.darkGray5">{subject}</H1>
       </HStack>
-      {/* <Box
+      <Box
         bg="selfassesment.landingLight"
         rounded="full"
         p="50px"
@@ -631,23 +644,24 @@ const LessonLandingPage = ({ subject, data, setLessonLandingPage }) => {
         ) : (
           <React.Fragment />
         )}
-      </HStack> */}
-      <H2 textTransform="none">Click on the text to play. Listen carefully.</H2>
+      </HStack>
+      <BodySmall>Lets assess your English Skills</BodySmall>
       <Button
+        variant="rounded"
         flex={1}
         width="100%"
         rightIcon={
           <IconByName
             isDisabled
             p="2"
-            _icon={{ size: 20 }}
-            color="white"
+            _icon={{ size: 25 }}
+            color="selfassesment.white"
             name="ArrowRightLineIcon"
           />
         }
         onPress={(e) => setLessonLandingPage(false)}
       >
-        Begin
+        Begin Assessment
       </Button>
     </VStack>
   );

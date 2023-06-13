@@ -1,7 +1,8 @@
 import mapInterfaceData from './mapInterfaceData'
 import { get, post, update as coreUpdate } from './RestClient'
 import moment from 'moment'
-import * as courseRegistryService from './courseRegistryService'
+import { courseRegistryService } from '..'
+import { async } from '@firebase/util'
 const dateFor = moment().format('YYYY-MM-DD')
 
 export const getProgramId = async (props) => {

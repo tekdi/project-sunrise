@@ -24,6 +24,9 @@
     "prettier": "^2.6.0"
   },
   "dependencies": {
+    "@project-sunbird/client-services": "^6.0.1",
+    "@project-sunbird/telemetry-sdk": "^0.0.29",
+    "jquery": "^3.7.0",
     "react-audio-analyser": "^1.0.0",
     "react-qr-reader": "^3.0.0-beta-1",
     "react-router-dom": "^6.12.0",

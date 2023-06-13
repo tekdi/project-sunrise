@@ -16,7 +16,6 @@ export const telemetryFactory = {
       edata
     }
   },
-
   start: ({ appName, ...edata }) => {
     return {
       type: edata?.type,
@@ -32,7 +31,6 @@ export const telemetryFactory = {
       edata
     }
   },
-
   end: ({ appName, ...edata }) => {
     return {
       type: edata?.type,
