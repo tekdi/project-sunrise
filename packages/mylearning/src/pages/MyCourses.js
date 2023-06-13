@@ -106,8 +106,14 @@ const COMPLETED = "Completed";
 
 export default function MyCourses({ footerLinks, appName }) {
   const [isVisible, setIsVisible] = useState(true);
+  const [preferenceVisible, setpreferenceVisible] = useState(false);
   const handleButtonClick = () => {
     setIsVisible(false);
+    setpreferenceVisible(true);
+  };
+  const handlePreferenceButtonClick = () => {
+    setIsVisible(true);
+    setpreferenceVisible(false);
   };
   const { t } = useTranslation();
   const [filterObject, setFilterObject] = React.useState({});
@@ -350,7 +356,19 @@ export default function MyCourses({ footerLinks, appName }) {
           isQRcodebutton: true,
           titleComponent: <NameTag />,
         }}
-        subHeader={<H2 textTransform="inherit">{getSubTitle()}</H2>}
+        subHeader={
+          <H2 textTransform="inherit">
+            {/* {getSubTitle()} */}
+            {preferenceVisible && (
+              <button
+                onClick={handlePreferenceButtonClick}
+                className={styles.preferencesbutton}
+              >
+                Reset Prefererences
+              </button>
+            )}
+          </H2>
+        }
         _subHeader={{ bg: "mylearning.cardBg" }}
         _footer={footerLinks}
       >

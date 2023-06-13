@@ -19,13 +19,19 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
     navigate("/mylearning");
   };
   const qrscanner = () => {
-    navigate("/qrscanner");
+    navigate("/aisearch");
   };
   const voice = () => {
     navigate("/voicesearch");
   };
   const preference = () => {
     navigate("/mycourses");
+  };
+  const toc = () => {
+    navigate("studentprogram/subjects");
+  };
+  const jugalbandi = () => {
+    navigate("/jugalbandi");
   };
 
   return (
@@ -51,26 +57,35 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
             ]}
           />
         </Box>
-        <div className={styles.bdiv}>
-          {" "}
-          <button className={styles.button} onClick={mainPage}>
-            Browse and Search
-          </button>{" "}
-        </div>
-        <div className={styles.bdiv}>
-          {" "}
-          <button onClick={voice} className={styles.button}>
-            Voice Search
-          </button>
-        </div>
-        <div className={styles.bdiv}>
-          {" "}
-          <button onClick={qrscanner} className={styles.button}>
-            QR Search
-          </button>
-          <button onClick={preference} className={styles.button}>
-            Select Course by Preference
-          </button>
+
+        <div>
+          <div className={styles.bdiv}>
+            {" "}
+            <button className={styles.button} onClick={mainPage}>
+              Browse and Search
+            </button>{" "}
+          </div>
+          <div className={styles.bdiv}>
+            {" "}
+            <button onClick={voice} className={styles.button}>
+              Voice Search
+            </button>
+          </div>
+          <div className={styles.bdiv}>
+            {" "}
+            <button onClick={qrscanner} className={styles.button}>
+              AI Search
+            </button>
+            <button onClick={preference} className={styles.button}>
+              Select Course by Preference
+            </button>
+            <button onClick={toc} className={styles.button}>
+              Course TOC
+            </button>
+            <button onClick={jugalbandi} className={styles.button}>
+              Jugalbandi
+            </button>
+          </div>
         </div>
       </VStack>
     </Layout>

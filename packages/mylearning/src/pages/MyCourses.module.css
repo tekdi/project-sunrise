@@ -38,3 +38,20 @@
 .donebutton:hover {
   background-color: #d9654c;
 }
+.preferencesbutton {
+  margin-top: 20px;
+  background-color: #f87558;
+  color: white;
+  border-color: #f87558;
+  border-width: 0;
+  border-radius: 5px;
+  width: 160px;
+  height: 30px;
+  font-family: "Amazon Ember", sans-serif;
+  font-weight: 500;
+  font-size: medium;
+}
+
+.preferencesbutton:hover {
+  background-color: #d9654c;
+}

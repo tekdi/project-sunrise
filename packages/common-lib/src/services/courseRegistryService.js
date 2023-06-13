@@ -9,7 +9,6 @@ const interfaceData = {
   description: 'description',
   children: 'children'
 }
-
 let only = Object.keys(interfaceData)
 let baseUrl = process.env.REACT_APP_API_URL
 
@@ -26,7 +25,6 @@ export const getAll = async ({ adapter, ...params } = {}, header = {}) => {
     null,
     { params, headers }
   )
-
   if (result.data.data) {
     const newData = result.data.data.map((e) =>
       mapInterfaceData(e, interfaceData)
@@ -36,7 +34,6 @@ export const getAll = async ({ adapter, ...params } = {}, header = {}) => {
     return []
   }
 }
-
 export const getOne = async (
   { id, adapter, coreData, type, userId, courseType },
   header = {}
@@ -92,17 +89,14 @@ export const getOne = async (
     return {}
   }
 }
-
 export const getContent = async ({ id, adapter }, header = {}) => {
   let headers = {
     ...header,
     Authorization: 'Bearer ' + localStorage.getItem('token')
   }
-
   try {
     const result = await get(
       baseUrl + '/course/' + adapter + '/content/courseid',
-      // `https://dhruva.shikshalokam.org/api/content/v1/read/${id}?fields=ageGroup,appIcon,artifactUrl,attributions,attributions,audience,author,badgeAssertions,board,body,channel,code,concepts,contentCredits,contentType,contributors,copyright,copyrightYear,createdBy,createdOn,creator,creators,description,displayScore,domain,editorState,flagReasons,flaggedBy,flags,framework,gradeLevel,identifier,itemSetPreviewUrl,keywords,language,languageCode,lastUpdatedOn,license,mediaType,medium,mimeType,name,originData,osId,owner,pkgVersion,publisher,questions,resourceType,scoreDisplayConfig,status,streamingUrl,subject,template,templateId,totalQuestions,totalScore,versionKey,visibility,year,primaryCategory,additionalCategories,interceptionPoints,interceptionType&licenseDetails=name,description,url`,
       {
         params: {
           courseId: id
@@ -121,7 +115,6 @@ export const getContent = async ({ id, adapter }, header = {}) => {
     return {}
   }
 }
-
 export const lessontracking = async (
   { program, subject, ...params },
   header = {}
@@ -130,29 +123,28 @@ export const lessontracking = async (
     ...header,
     Authorization: 'Bearer ' + localStorage.getItem('token')
   }
-
   try {
-    const result = await post(
-      baseUrl + '/altlessontracking/altcheckandaddlessontracking',
-      params,
-      { params: { program, subject }, headers }
-    )
-    if (result?.data?.data) {
-      return result.data?.data
-    } else {
-      return {}
-    }
-  } catch {
-    return {}
+    setTimeout(async () => {
+      const result = await post(
+        baseUrl + '/altlessontracking/altcheckandaddlessontracking',
+        params,
+        { params: { program, subject }, headers }
+      )
+      if (result?.data?.data) {
+        return result.data?.data
+      } else {
+        return {}
+      }
+    }, 1500)
+  } catch (e) {
+    console.log(e)
   }
 }
-
 export const getLessontracking = async ({ userId, ...params }, header = {}) => {
   let headers = {
     ...header,
     Authorization: 'Bearer ' + localStorage.getItem('token')
   }
-
   try {
     const result = await post(
       `${baseUrl}/altlessontracking/search/${userId}`,
@@ -176,7 +168,6 @@ export const coursetracking = async (params, header = {}) => {
     ...header,
     Authorization: 'Bearer ' + localStorage.getItem('token')
   }
-
   try {
     const result = await post(
       baseUrl + '/alt-course-tracking/altcreatecoursetracking',
@@ -194,7 +185,6 @@ export const coursetracking = async (params, header = {}) => {
     return {}
   }
 }
-
 export const getDataWithTracking = async (data, userId) => {
   if (Array.isArray(data)) {
     return await Promise.all(
@@ -210,7 +200,6 @@ export const getDataWithTracking = async (data, userId) => {
     return []
   }
 }
-
 export const courseTrackingSearch = async (
   { limit, userId, ...params },
   header = {}
@@ -219,7 +208,6 @@ export const courseTrackingSearch = async (
     ...header,
     Authorization: 'Bearer ' + localStorage.getItem('token')
   }
-
   try {
     const result = await post(
       `${baseUrl}/altlessontracking/search/${userId}`,
@@ -237,7 +225,6 @@ export const courseTrackingSearch = async (
     return []
   }
 }
-
 export const moduleTracking = async (
   { limit, userId, ...params } = {},
   header = {}
@@ -246,7 +233,6 @@ export const moduleTracking = async (
     ...header,
     Authorization: 'Bearer ' + localStorage.getItem('token')
   }
-
   try {
     const result = await post(
       `${baseUrl}/altmoduletracking/search/${userId}`,
@@ -264,13 +250,11 @@ export const moduleTracking = async (
     return []
   }
 }
-
 export const courseTrackingRead = async ({ id, ...params }, header = {}) => {
   let headers = {
     ...header,
     Authorization: 'Bearer ' + localStorage.getItem('token')
   }
-
   try {
     const result = await get(baseUrl + '/course/{questionset}/questionsetid', {
       params: { questionsetId: id },
@@ -298,7 +282,11 @@ export const courseStatus = async (params, header = {}) => {
       params,
       { params, headers }
     )
+    console.log(result)
+
     if (result?.data?.data) {
+      console.log('API result')
+
       return result.data?.data
     } else {
       return {}

@@ -23,6 +23,9 @@ export default function CourseList({ footerLinks }) {
   const navigate = useNavigate();
   let { subjectname } = useParams();
   subjectname = capitalizeFirstLetter(subjectname);
+  React.useLayoutEffect(() => {
+    console.log("Course List Page");
+  });
 
   useEffect(async () => {
     try {
@@ -48,13 +51,30 @@ export default function CourseList({ footerLinks }) {
     <Layout
       loading={loading}
       _header={{
-        title: subjectname,
+        title:
+          subjectname === "English"
+            ? t("ENGLISH")
+            : subjectname === "Mathematics"
+            ? t("MATHEMATICS")
+            : subjectname === "Science"
+            ? t("SCIENCE")
+            : subjectname === "Odiya"
+            ? t("ODIYA")
+            : "",
         subHeadingComponent: (
           <Breadcrumb
             data={[
               { title: t("HOME"), link: "/" },
               { title: t("SUBJECTS"), link: "/studentprogram/subjects" },
-              subjectname,
+              subjectname === "English"
+                ? t("ENGLISH")
+                : subjectname === "Mathematics"
+                ? t("MATHEMATICS")
+                : subjectname === "Science"
+                ? t("SCIENCE")
+                : subjectname === "Odiya"
+                ? t("ODIYA")
+                : "",
             ]}
           />
         ),
@@ -68,11 +88,9 @@ export default function CourseList({ footerLinks }) {
         titleComponent: <NameTag />,
         LeftIcon: (
           <HStack space={2} alignItems="center">
-            <Avatar
-              rounded={0}
-              _image={{ rounded: 0 }}
-              style={{ borderRadius: 0 }}
-              source={require("../assets/images/TSHeader.jpg")}
+            <img
+              width={"100px"}
+              src={require("./../assets/images/TSHeader.png")}
             />
           </HStack>
         ),
@@ -101,13 +119,6 @@ export default function CourseList({ footerLinks }) {
                       onPress: () =>
                         navigate(
                           `/studentprogram/lessons/${item?.identifier}/${item?.objectType}`
-                        ),
-                    }
-                  : ["resourceType"].includes(item?.resourceType)
-                  ? {
-                      onPress: () =>
-                        navigate(
-                          `/studentprogram/lessons/${item?.identifier}/${item?.resourceType}`
                         ),
                     }
                   : {

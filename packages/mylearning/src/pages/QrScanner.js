@@ -11,7 +11,7 @@ function App() {
 
   const navigate = useNavigate();
   const myRegister = () => {
-    navigate("/");
+    navigate("/aisearch");
   };
 
   useEffect(() => {
@@ -47,9 +47,14 @@ function App() {
           onResult={(result, error) => {
             if (!!result) {
               // location.reload();
-              window.open(result, "_blank");
+              // window.open(result, "_blank");
+              window.open("http://localhost:3010/studentapp", "_blank");
+
               console.log(result.text);
+              const link = result.text;
+              const lastSlug = link.substring(link.lastIndexOf("/") + 1);
               setData(result.text);
+              localStorage.setItem("scannedcode", lastSlug);
             }
 
             if (!!error) {

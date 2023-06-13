@@ -18,6 +18,11 @@ export default function SubjectList({ footerLinks }) {
   const navigate = useNavigate();
   const [SubjectList, setSubjectListData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+
+  React.useLayoutEffect(() => {
+    console.log("Subject List Page");
+  });
+
   React.useEffect(() => {
     const subjects = async () => {
       try {
@@ -58,11 +63,9 @@ export default function SubjectList({ footerLinks }) {
         titleComponent: <NameTag />,
         LeftIcon: (
           <HStack>
-            <Avatar
-              rounded={0}
-              _image={{ rounded: 0 }}
-              style={{ borderRadius: 0 }}
-              source={require("../assets/images/TSHeader.jpg")}
+            <img
+              width={"100px"}
+              src={require("./../assets/images/TSHeader.png")}
             />
           </HStack>
         ),
