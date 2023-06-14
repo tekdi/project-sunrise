@@ -6,8 +6,12 @@ import { AppBar } from "@shiksha/common-lib";
 
 function Aisearch() {
   const navigate = useNavigate();
-  const aiqrsearch = () => {
+  const studentqr = () => {
     navigate("/qrscanner");
+  };
+
+  const teacherqr = () => {
+    navigate("/teacherqr");
   };
 
   return (
@@ -15,10 +19,12 @@ function Aisearch() {
       <AppBar />
       <div className={styles.outerdiv}>
         {" "}
-        <button onClick={aiqrsearch} className={styles.button}>
+        <button onClick={studentqr} className={styles.button}>
           Student
         </button>
-        <button className={styles.button}>Teacher</button>
+        <button onClick={teacherqr} className={styles.button}>
+          Teacher
+        </button>
       </div>
     </React.Fragment>
   );

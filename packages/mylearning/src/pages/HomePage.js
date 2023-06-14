@@ -31,7 +31,7 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
     navigate("studentprogram/subjects");
   };
   const jugalbandi = () => {
-    navigate("/jugalbandi");
+    window.open("http://139.59.21.40:5001/");
   };
 
   return (
@@ -74,7 +74,7 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
           <div className={styles.bdiv}>
             {" "}
             <button onClick={qrscanner} className={styles.button}>
-              AI Search
+              QR based AI Tool
             </button>
             <button onClick={preference} className={styles.button}>
               Select Course by Preference

@@ -13,11 +13,12 @@ import MyCourses from "pages/MyCourses";
 import CourseToc from "pages/CourseToc";
 import TopicToc from "pages/TopicToc";
 import LessonsToc from "pages/LessonsToc";
-import Jugalbandi from "pages/Jugalbandi";
 import TopicList from "pages/TopicToc";
 import Aisearch from "pages/Aisearch";
 import StudentApp from "pages/StudentApp";
 import Chatbot from "pages/Chatbot";
+import TeacherApp from "pages/TeacherApp";
+import Teacherqr from "pages/TeacherQr";
 
 const StudentprogramLessonList = React.lazy(() =>
   import("studentprogram/Lessons")
@@ -44,6 +45,11 @@ function App() {
       component: QrScanner,
     },
     {
+      moduleName: "qrscanner",
+      path: "/teacherqr",
+      component: Teacherqr,
+    },
+    {
       moduleName: "voicesearch",
       path: "/voicesearch",
       component: VoiceSearch,
@@ -63,11 +69,7 @@ function App() {
       path: "/studentprogram/:subjectname",
       component: TopicToc,
     },
-    {
-      moduleName: "mylearning",
-      path: "/jugalbandi",
-      component: Jugalbandi,
-    },
+
     {
       moduleName: "mylearning",
       path: "/studentprogram/lessons/:id/:type",
@@ -82,6 +84,11 @@ function App() {
       moduleName: "mylearning",
       path: "/studentapp",
       component: StudentApp,
+    },
+    {
+      moduleName: "mylearning",
+      path: "/teacherapp",
+      component: TeacherApp,
     },
     {
       moduleName: "mylearning",
