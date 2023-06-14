@@ -111,7 +111,7 @@ function App() {
 
               window.open(
                 "https://shikshademo.uniteframework.io/studentapp",
-                "_blank"
+                "_self"
               );
 
               // setTimeout(function () {
