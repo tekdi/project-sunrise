@@ -104,15 +104,15 @@ function Teacherqr() {
               setData(result.text);
               localStorage.setItem("scannedcode", lastSlug);
               dialcodeFunction(lastSlug);
-              window.open("http://localhost:3010/teacherapp", "_blank");
+              // window.open("http://localhost:3010/teacherapp", "_blank");
               // setTimeout(function () {
               //   window.open("http://localhost:3010/teacherapp", "_blank");
               // }, 500);
 
-              // window.open(
-              //   "https://shikshademo.uniteframework.io/studentapp",
-              //   "_blank"
-              // );
+              window.open(
+                "https://shikshademo.uniteframework.io/studentapp",
+                "_blank"
+              );
 
               // setTimeout(function () {
               //   window.open("https://shikshademo.uniteframework.io/studentapp");
