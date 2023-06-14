@@ -1,10 +1,10 @@
 import React, { useEffect, useLayoutEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./StudentApp.module.css";
+import styles from "./TeacherApp.module.css";
 import { useLayout } from "native-base";
 
-function StudentApp() {
+function TeacherApp() {
   const [localqr, setLocalQr] = useState("");
   const [board, setBoard] = useState("");
   const [studentgrade, setStudentGrade] = useState("");
@@ -12,8 +12,12 @@ function StudentApp() {
   const [description, setDescription] = useState("");
 
   const [displayText, setDisplayText] = useState("");
-  const [displayText2, setDisplayText2] = useState("");
-  const [displayText3, setDisplayText3] = useState("");
+  const [displayText2, setDisplayText2] = useState(
+    "Practice Questions on Air around Us Grade 6 from class 6 science chapter 15"
+  );
+  const [displayText3, setDisplayText3] = useState(
+    "Acute and Chronic Diseases"
+  );
   const navigate = useNavigate();
 
   useLayoutEffect(() => {
@@ -55,7 +59,7 @@ function StudentApp() {
     console.log(displayText);
     localStorage.setItem(
       "displayText",
-      `Revision on ${description} for ${studentgrade} subject ${subject}`
+      `Questions to ask students on ${description} for ${studentgrade} subject ${subject}`
     );
     navigate("/studentapp/chatbot");
   };
@@ -63,7 +67,7 @@ function StudentApp() {
     console.log(displayText2);
     localStorage.setItem(
       "displayText2",
-      `Practice Questions on ${description} for ${studentgrade} subject ${subject}`
+      `Practice quiz for students on ${description} for ${studentgrade} subject ${subject}`
     );
     navigate("/studentapp/chatbot");
   };
@@ -71,18 +75,17 @@ function StudentApp() {
     console.log(displayText3);
     localStorage.setItem(
       "displayText3",
-      `Vocabulary on ${description} for ${studentgrade} subject ${subject}`
+      `Class Activity for students on ${description} for ${studentgrade} on subject ${subject}`
     );
     navigate("/studentapp/chatbot");
   };
-
   const myclick4 = () => {
     window.open("http://139.59.21.40:5001/");
   };
 
   return (
     <div className={styles.outerdiv}>
-      <h2>Student App</h2>
+      <h2>Teacher App</h2>
       {/* <h3>Dial code : {localqr}</h3> */}
       <div>
         {board}, {studentgrade}, {subject}
@@ -90,19 +93,19 @@ function StudentApp() {
       <h3 style={{ color: "red" }}>{description}</h3>
       <button className={styles.button} onClick={myclick0}>
         {" "}
-        View Videos
+        Concept Clarity Videos
       </button>
       <button className={styles.button} onClick={myclick}>
         {" "}
-        Revise the topic
+        Questions to Ask
       </button>
       <button className={styles.button} onClick={myclick2}>
         {" "}
-        Practice Questions
+        Practice Sheets
       </button>
       <button className={styles.button} onClick={myclick3}>
         {" "}
-        Chapter Vocabulary
+        Class Activities
       </button>
       <button className={styles.button}> Test your Knowloedge</button>
       <button className={styles.button} onClick={myclick4}>
@@ -113,4 +116,4 @@ function StudentApp() {
   );
 }
 
-export default StudentApp;
+export default TeacherApp;

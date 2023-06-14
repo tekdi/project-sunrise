@@ -6,7 +6,7 @@ import { AppBar } from "@shiksha/common-lib";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function App() {
+function Teacherqr() {
   const [data, setData] = useState("");
   const [FrontmediaStream, setFrontmediaStream] = useState(null);
 
@@ -85,7 +85,7 @@ function App() {
         <QrReader
           className={styles.scanner}
           constraints={{ facingMode: "environment" }}
-          scanDelay={1000}
+          scanDelay={3000}
           onResult={(result, error) => {
             if (!!result) {
               // location.reload();
@@ -104,9 +104,9 @@ function App() {
               setData(result.text);
               localStorage.setItem("scannedcode", lastSlug);
               dialcodeFunction(lastSlug);
-              // window.open("http://localhost:3010/studentapp", "_blank");
+              // window.open("http://localhost:3010/teacherapp", "_blank");
               // setTimeout(function () {
-              //   window.open("http://localhost:3010/studentapp", "_blank");
+              //   window.open("http://localhost:3010/teacherapp", "_blank");
               // }, 500);
 
               window.open(
@@ -132,4 +132,4 @@ function App() {
   );
 }
 
-export default App;
+export default Teacherqr;
