@@ -55,7 +55,7 @@ function StudentApp() {
     console.log(displayText);
     localStorage.setItem(
       "displayText",
-      `Revision on ${description} for ${studentgrade} subject ${subject}`
+      `A brief revision of Chapter ${description} for ${studentgrade} and Subject ${subject}`
     );
     navigate("/studentapp/chatbot");
   };
@@ -63,7 +63,7 @@ function StudentApp() {
     console.log(displayText2);
     localStorage.setItem(
       "displayText",
-      `Practice Questions on ${description} for ${studentgrade} subject ${subject}`
+      `Some Practice Questions on Chapter ${description} for ${studentgrade} and Subject ${subject}`
     );
     navigate("/studentapp/chatbot");
   };
@@ -71,7 +71,7 @@ function StudentApp() {
     console.log(displayText3);
     localStorage.setItem(
       "displayText",
-      `Vocabulary on ${description} for ${studentgrade} subject ${subject}`
+      `Vocabulary words related to Chapter ${description} for ${studentgrade} Subject ${subject}`
     );
     navigate("/studentapp/chatbot");
   };

@@ -17,6 +17,7 @@ function Aisearch() {
   return (
     <React.Fragment>
       <AppBar />
+
       <div className={styles.outerdiv}>
         {" "}
         <button onClick={studentqr} className={styles.button}>

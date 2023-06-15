@@ -35,7 +35,10 @@ import {
 const colors = overrideColorTheme();
 
 export default function Login({ swPath }) {
-  const [credentials, setCredentials] = useState();
+  const [credentials, setCredentials] = useState({
+    username: "Parth",
+    password: "alt1234",
+  });
   const [errors, setErrors] = React.useState({});
   const [show, setShow] = React.useState(false);
   const { t } = useTranslation();
@@ -138,10 +141,11 @@ export default function Login({ swPath }) {
         <Center width={width}>
           <VStack space="" w="300px">
             <Center>
-              <Box mt={"10px"}>
-                <Heading>{t("WELCOME")}</Heading>
+              <Box mt={"10px"} w={"500px"} ml={"210px"}>
+                <Heading>{t("Welcome to Project Sunrise")}</Heading>
               </Box>
             </Center>
+
             <VStack space={2} pt={"25px"} pb={"25px"}>
               {"alert" in errors ? (
                 <Alert w="100%" status={"error"}>
@@ -179,6 +183,7 @@ export default function Login({ swPath }) {
                     {t("USERNAME")}
                   </FormControl.Label>
                   <Input
+                    defaultValue="parth"
                     bg="white"
                     variant="rounded"
                     borderColor={
@@ -219,6 +224,7 @@ export default function Login({ swPath }) {
                     {t("PASSWORD")}
                   </FormControl.Label>
                   <Input
+                    defaultValue="alt1234"
                     bg="white"
                     variant="rounded"
                     type={show ? "text" : "password"}
@@ -265,6 +271,13 @@ export default function Login({ swPath }) {
           </VStack>
         </Center>
       </Box>
+      <div style={{ width: "500px", marginLeft: "30%" }}>
+        <i style={{ fontSize: "12px" }}>
+          {" "}
+          “Purpose specific, low tech, easy to configure lightweight apps
+          powered by DPGs & DPIs”
+        </i>
+      </div>
     </Layout>
   );
 }

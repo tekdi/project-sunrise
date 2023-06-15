@@ -229,7 +229,7 @@ export default function SearchLayout({
                   ? searchPlaceholder
                   : //   : `Type ${minStringLenght ? 'min ' + minStringLenght : ''}
                     //  to search `
-                    `Try to speak something by clicking on the mic `
+                    `Tap to Speak`
                 // ai4bharat ? ai4bharat : searchPlaceholder
               }
             />
@@ -258,7 +258,7 @@ export default function SearchLayout({
                     pl='0'
                     onPress={() => controlAudio('inactive')}
                   />
-                  <div>Press again to stop recording</div>
+                  <div>Tap again to Stop</div>
                 </React.Fragment>
               ) : (
                 <React.Fragment>
@@ -270,7 +270,7 @@ export default function SearchLayout({
                     pl='0'
                     onPress={() => controlAudio('recording')}
                   />
-                  <div>Press the mic to start recording</div>
+                  <div>Tap to Speak</div>
                 </React.Fragment>
               )}
             </Stack>

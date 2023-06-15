@@ -12,8 +12,12 @@ function Chatbot() {
 
     if (savedText !== null) {
       // const updatedText = savedText.replace(/\s/g, "%20").toLowerCase();
-      setDisplayText(savedText);
-      console.log(displayText);
+
+      let uri = `https://ncfchat.sunbird.org/ncert/ask?q=${savedText}`;
+      let encoded = uri.replace(/\s/g, "%20").replace(/-/g, "");
+
+      setDisplayText(encoded);
+      console.log(encoded);
     }
   }, []);
 
@@ -28,10 +32,7 @@ function Chatbot() {
       <br></br>
       <div className={styles.text}>Chapter 6</div>
       {/* <div className={styles.text}>{`${displayText}`}</div> */}
-      <iframe
-        className={styles.iframe}
-        src={`https://ncfchat.sunbird.org/ncert/ask?q=${displayText}`}
-      ></iframe>
+      <iframe className={styles.iframe} src={displayText}></iframe>
       {/* <button className={styles.backbutton} onClick={back}>
         Back
       </button> */}
