@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./StudentApp.module.css";
 import { useLayout } from "native-base";
+import LaunchIcon from "@mui/icons-material/Launch";
 
 function StudentApp() {
   const [localqr, setLocalQr] = useState("");
@@ -90,7 +91,8 @@ function StudentApp() {
       <h3 style={{ color: "red" }}>{description}</h3>
       <button className={styles.button} onClick={myclick0}>
         {" "}
-        View Videos
+        <span> View Videos</span>
+        <LaunchIcon />
       </button>
       <button className={styles.button} onClick={myclick}>
         {" "}

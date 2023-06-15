@@ -24,6 +24,8 @@
     "prettier": "^2.6.0"
   },
   "dependencies": {
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.5",
     "@project-sunbird/client-services": "^6.0.1",
     "@project-sunbird/telemetry-sdk": "^0.0.29",
     "axios": "^1.4.0",

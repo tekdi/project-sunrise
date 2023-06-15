@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import IconByName from "@shiksha/common-lib";
 import VoiceSearch from "./VoiceSearch";
 import VirtualSchool from "./VirtualSchool";
+import LaunchIcon from "@mui/icons-material/Launch";
 
 export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
   const { t } = useTranslation();
@@ -62,7 +63,8 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
             </button>
             <button className={styles.button}>AI Storybot</button>
             <button onClick={jugalbandi} className={styles.button}>
-              Textbook Mate
+              <span> Textbook Mate</span>
+              <LaunchIcon />
             </button>
             <button onClick={voice} className={styles.button}>
               Voice Search
@@ -74,10 +76,12 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
               Courses by Preference
             </button>
             <button onClick={teacherapp} className={styles.button}>
-              Shiksha Teacher App
+              <span> Shiksha Teacher App</span>
+              <LaunchIcon />
             </button>
             <button onClick={adaptivelearning} className={styles.button}>
-              ALT Adaptive Learning
+              <span> ALT Adaptive Learning</span>
+              <LaunchIcon />
             </button>
             <button onClick={toc} className={styles.button}>
               Course TOC

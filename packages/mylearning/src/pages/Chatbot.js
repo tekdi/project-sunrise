@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useRef, useEffect } from "react";
 import styles from "./Chatbot.module.css";
 import { useNavigate } from "react-router-dom";
 import { AppBar } from "@shiksha/common-lib";
@@ -32,6 +32,7 @@ function Chatbot() {
       <br></br>
       <div className={styles.text}>Chapter 6</div>
       {/* <div className={styles.text}>{`${displayText}`}</div> */}
+
       <iframe className={styles.iframe} src={displayText}></iframe>
       {/* <button className={styles.backbutton} onClick={back}>
         Back

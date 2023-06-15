@@ -2,11 +2,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 15%;
+}
+
+.innerdiv {
+  display: flex;
+  flex-direction: row;
 }
 
 .button {
-  margin-top: 20px;
   background-color: #4a86e8;
   color: white;
   border-color: #4a86e8;
@@ -21,4 +24,21 @@
 
 .button:hover {
   background-color: #d9654c;
+}
+.headingQR {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* margin-left: 15%; */
+  background-color: #f87558;
+}
+
+.subheadingQR {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
