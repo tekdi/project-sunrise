@@ -66,7 +66,7 @@ function TeacherApp() {
   const myclick2 = () => {
     console.log(displayText2);
     localStorage.setItem(
-      "displayText2",
+      "displayText",
       `Practice quiz for students on ${description} for ${studentgrade} subject ${subject}`
     );
     navigate("/studentapp/chatbot");
@@ -74,7 +74,7 @@ function TeacherApp() {
   const myclick3 = () => {
     console.log(displayText3);
     localStorage.setItem(
-      "displayText3",
+      "displayText",
       `Class Activity for students on ${description} for ${studentgrade} on subject ${subject}`
     );
     navigate("/studentapp/chatbot");
