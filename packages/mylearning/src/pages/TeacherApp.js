@@ -13,7 +13,7 @@ function TeacherApp() {
 
   const [displayText, setDisplayText] = useState("");
   const [displayText2, setDisplayText2] = useState(
-    "Practice Questions on Air around Us Grade 6 from class 6 science chapter 15"
+    "Some Practice Questions on Air around Us Grade 6 from class 6 science chapter 15"
   );
   const [displayText3, setDisplayText3] = useState(
     "Acute and Chronic Diseases"
@@ -59,7 +59,7 @@ function TeacherApp() {
     console.log(displayText);
     localStorage.setItem(
       "displayText",
-      `Questions to ask students on ${description} for ${studentgrade} subject ${subject}`
+      `Some Practice Questions to ask students on ${description} for ${studentgrade} subject ${subject}`
     );
     navigate("/studentapp/chatbot");
   };
@@ -67,7 +67,7 @@ function TeacherApp() {
     console.log(displayText2);
     localStorage.setItem(
       "displayText",
-      `Practice quiz for students on ${description} for ${studentgrade} subject ${subject}`
+      `Some Practice quiz for students on ${description} for ${studentgrade} subject ${subject}`
     );
     navigate("/studentapp/chatbot");
   };
@@ -75,7 +75,7 @@ function TeacherApp() {
     console.log(displayText3);
     localStorage.setItem(
       "displayText",
-      `Class Activity for students on ${description} for ${studentgrade} on subject ${subject}`
+      `Some Class Activity for students on ${description} for ${studentgrade} on subject ${subject}`
     );
     navigate("/studentapp/chatbot");
   };

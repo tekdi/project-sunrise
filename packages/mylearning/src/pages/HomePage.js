@@ -34,6 +34,12 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
   const jugalbandi = () => {
     window.open("http://139.59.21.40:5001/");
   };
+  const adaptivelearning = () => {
+    window.open("https://alt-shiksha.uniteframework.io/ ");
+  };
+  const teacherapp = () => {
+    window.open("https://sandbox.shiksha.samagra.io/ ");
+  };
   const virtualschool = () => {
     navigate("/virtualschool");
   };
@@ -41,56 +47,40 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
   return (
     <Layout
       _header={{
-        title: t("MY_LEARNING"),
+        title: t("PROJECT SUNRISE APPS"),
       }}
-      _appBar={{ languages: manifest.languages }}
-      subHeader={
-        <H2 textTransform="inherit">{t("SEARCH ALL TRAINING COURSES")}</H2>
-      }
-      _subHeader={{ bg: colors.cardBg }}
-      _footer={footerLinks}
     >
       <VStack>
-        <Box mb="4" roundedBottom={"xl"} shadow={2}>
-          <Tab
-            _box={{ bg: colors.white, px: "5", pt: "5" }}
-            routes={[
-              {
-                title: t("Select how you want to search your course"),
-              },
-            ]}
-          />
-        </Box>
-
         <div>
-          <div className={styles.bdiv}>
-            {" "}
-            <button className={styles.button} onClick={mainPage}>
-              Browse and Search
-            </button>{" "}
-          </div>
-          <div className={styles.bdiv}>
-            {" "}
-            <button onClick={voice} className={styles.button}>
-              Voice Search
-            </button>
-          </div>
           <div className={styles.bdiv}>
             {" "}
             <button onClick={qrscanner} className={styles.button}>
               QR based AI Tool
             </button>
+            <button onClick={virtualschool} className={styles.button}>
+              Virtual School
+            </button>
+            <button className={styles.button}>AI Storybot</button>
+            <button onClick={jugalbandi} className={styles.button}>
+              Textbook Mate
+            </button>
+            <button onClick={voice} className={styles.button}>
+              Voice Search
+            </button>
+            <button className={styles.button} onClick={mainPage}>
+              Browse and Search
+            </button>{" "}
             <button onClick={preference} className={styles.button}>
-              Select Course by Preference
+              Courses by Preference
+            </button>
+            <button onClick={teacherapp} className={styles.button}>
+              Shiksha Teacher App
+            </button>
+            <button onClick={adaptivelearning} className={styles.button}>
+              ALT Adaptive Learning
             </button>
             <button onClick={toc} className={styles.button}>
               Course TOC
-            </button>
-            <button onClick={jugalbandi} className={styles.button}>
-              Jugalbandi
-            </button>
-            <button onClick={virtualschool} className={styles.button}>
-              Virtual School
             </button>
           </div>
         </div>

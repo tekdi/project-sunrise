@@ -105,16 +105,16 @@ function App() {
               localStorage.setItem("scannedcode", lastSlug);
               dialcodeFunction(lastSlug);
               // window.open("http://localhost:3010/studentapp", "_blank");
-              // setTimeout(function () {
-              //   window.open("http://localhost:3010/studentapp", "_self");
-              // }, 1000);
-
               setTimeout(function () {
-                window.open(
-                  "https://shikshademo.uniteframework.io/studentapp",
-                  "_self"
-                );
+                window.open("http://localhost:3010/studentapp", "_self");
               }, 1000);
+
+              // setTimeout(function () {
+              //   window.open(
+              //     "https://shikshademo.uniteframework.io/studentapp",
+              //     "_self"
+              //   );
+              // }, 1000);
             }
 
             if (!!error) {

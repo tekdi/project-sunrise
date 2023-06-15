@@ -252,7 +252,7 @@ export default function MyLearning({ footerLinks, appName }) {
   return (
     <Layout
       _header={{
-        title: getTitle(),
+        title: "CONTENT DELIVERY",
         // iconComponent: (
         //   <Button
         //     rounded="full"
@@ -286,7 +286,11 @@ export default function MyLearning({ footerLinks, appName }) {
         isQRcodebutton: true,
         titleComponent: <NameTag />,
       }}
-      subHeader={<H2 textTransform="inherit">{getSubTitle()}</H2>}
+      subHeader={
+        <H2 textTransform="inherit">
+          {"Browser and Search Learning Content from Diksha/Sunbird SAAS"}
+        </H2>
+      }
       _subHeader={{ bg: "mylearning.cardBg" }}
       _footer={footerLinks}
     >

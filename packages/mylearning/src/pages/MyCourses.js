@@ -221,7 +221,7 @@ export default function MyCourses({ footerLinks, appName }) {
   }, [search, filterObject]);
 
   const getTitle = () => {
-    return t("My Courses");
+    return t("CONTENT DELIVERY");
   };
 
   const getSubTitle = () => {
