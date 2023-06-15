@@ -35,17 +35,17 @@ function StudentApp() {
     setDescription(localstoragedescription);
   }, []);
 
-  // useEffect(() => {
-  //   for (var i = localStorage.length - 1; i >= 0; i--) {
-  //     var key = localStorage.key(i);
+  useEffect(() => {
+    for (var i = localStorage.length - 1; i >= 0; i--) {
+      var key = localStorage.key(i);
 
-  //     if (key !== "token") {
-  //       localStorage.removeItem(key);
-  //     }
-  //   }
+      if (key !== "token") {
+        localStorage.removeItem(key);
+      }
+    }
 
-  //   // localStorage.clear();
-  // }, []);
+    localStorage.clear();
+  }, []);
 
   const myclick0 = () => {
     window.open(`https://diksha.gov.in/get/dial/${localqr}`);
