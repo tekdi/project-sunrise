@@ -8,10 +8,11 @@ import {
   Loading,
   telemetryFactory,
   H2,
-  overrideColorTheme,
-  BodyLarge,
   SearchLayout,
   BodySmall,
+  coursetrackingRegistryService,
+  NameTag,
+  arryaFilters,
 } from "@shiksha/common-lib";
 import { useTranslation } from "react-i18next";
 import {
@@ -27,11 +28,11 @@ import {
 } from "native-base";
 import { useParams } from "react-router-dom";
 import manifest from "../manifest.json";
-import colorTheme from "../colorTheme";
-import VideoComponent from "../components/VideoComponent";
 import { defaultInputs } from "config/mylearningConfig";
-import { courses as coursesData } from "../config/mylearning";
-
+import MyCoursesComponent from "components/MyCoursesComponent";
+import moment from "moment";
+import { useNavigate } from "react-router-dom";
+import styles from "./VirtualSchool.module.css";
 const sortArray = [
   {
     title: "By Difficulty",
@@ -85,66 +86,123 @@ const sortArray = [
     ],
   },
 ];
-
-const newDefaultInputs = defaultInputs.map((e) => {
-  return {
-    ...e,
-    ["attributeName"]: ["gradeLevel"].includes(e.attributeName)
-      ? "grade"
-      : e.attributeName,
-    ["type"]: "sting",
-  };
-});
-
 const ONGOING = "Ongoing";
 const ASSIGNED = "Assigned";
 const COMPLETED = "Completed";
-
-const colors = overrideColorTheme(colorTheme);
-
-export default function VideoList({ footerLinks, appName }) {
+export default function MyLearning({ footerLinks, appName }) {
   const { t } = useTranslation();
   const [filterObject, setFilterObject] = React.useState({});
   const [courses, setCourses] = React.useState([]);
+  const [apiCourses, setApiCourses] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
-  const [search, setSearch] = React.useState(true);
+  const [search, setSearch] = React.useState("");
   const [searchState, setSearchState] = React.useState(false);
   const [showModalSort, setShowModalSort] = React.useState(false);
+  const [courseStartTime, setCourseStartTime] = React.useState();
+  const [filters, setFilters] = React.useState();
+  const navigate = useNavigate();
   const { state } = useParams();
-
+  const userId = localStorage.getItem("id");
+  const handleSearchState = (item) => {
+    setSearchState(item);
+    const telemetryData = telemetryFactory.interact({
+      appName,
+      type: "Course-search",
+    });
+    capture("INTERACT", telemetryData);
+  };
+  const leavePageCaptureEvent = () => {
+    if (courseStartTime) {
+      const telemetryData = telemetryFactory.interact({
+        appName,
+        type: "Course-Exploring-End",
+        state,
+        duration: courseStartTime
+          ? moment().diff(courseStartTime, "seconds")
+          : 0,
+      });
+      capture("END", telemetryData);
+    }
+  };
+  const handleBackButton = () => {
+    leavePageCaptureEvent();
+    navigate(-1);
+  };
   React.useEffect(async () => {
-    setCourses(coursesData.filter((e) => (state ? e.state === state : true)));
+    const courseData = await coursetrackingRegistryService.getAll({
+      channel: "013710046929969152321",
+      adapter: "diksha",
+    });
+    setCourses(courseData.slice(0, 10));
+    setApiCourses(courseData);
+    let subjectData = [];
+    courseData
+      .filter((e) => e.subject)
+      .forEach((e) => {
+        subjectData = [...subjectData, ...e?.subject];
+      });
+    subjectData = subjectData.filter(
+      (value, index, self) => self.indexOf(value) === index
+    );
+    setFilters([
+      {
+        name: "Language",
+        attributeName: "medium",
+        data: ["Letters", "Words", "Short Para", "Long Para"],
+      },
+      {
+        name: "Resource Type",
+        attributeName: "resourceType",
+        data: ["Read", "Learn"],
+      },
+    ]);
     setLoading(false);
+    const telemetryData = telemetryFactory.interact({
+      appName,
+      type: "Course-Exploring-Start",
+      state,
+    });
+    capture("START", telemetryData);
+    setCourseStartTime(moment());
+    return () => {
+      leavePageCaptureEvent();
+    };
   }, []);
-
+  React.useEffect(() => {
+    const searchData = search ? search.toLowerCase() : "";
+    const apiData = arryaFilters(apiCourses, filterObject);
+    const data = apiData.filter(
+      (item) =>
+        item?.name?.toLowerCase().indexOf(searchData) > -1 ||
+        item?.description?.toLowerCase().indexOf(searchData) > -1
+    );
+    setCourses(data.slice(0, 10));
+  }, [search, filterObject]);
   const getTitle = () => {
     if (state === ONGOING) {
-      return t("ALL_ONGOING_VIDEOS");
+      return t("ALL_ONGOING_COURSES");
     } else if (state === ASSIGNED) {
-      return t("ALL_ASSIGNED_VIDEOS");
+      return t("ALL_ASSIGNED_COURSES");
     } else if (state === COMPLETED) {
-      return t("ALL_COMPLETED_VIDEOS");
+      return t("ALL_COMPLETED_COURSES");
     } else {
-      return t("ALL_VIDEOS");
+      return t("ALL_COURSES");
     }
   };
-
   const getSubTitle = () => {
     if (state === ONGOING) {
-      return t("SEE_ALL_ONGOING_VIDEOS");
+      return t("SEE_ALL_ONGOING_COURSES");
     } else if (state === ASSIGNED) {
-      return t("SEE_ALL_ASSIGNED_VIDEOS");
+      return t("SEE_ALL_ASSIGNED_COURSES");
     } else if (state === COMPLETED) {
-      return t("SEE_ALL_COMPLETED_VIDEOS");
+      return t("SEE_ALL_COMPLETED_COURSES");
     } else {
-      return t("SEE_ALL_VIDEOS");
+      return t("SEE_ALL_COURSES");
     }
   };
-
   if (loading) {
     return <Loading />;
   }
-
   if (searchState) {
     return (
       <SearchLayout
@@ -157,48 +215,19 @@ export default function VideoList({ footerLinks, appName }) {
         }}
       >
         <Children
-          {...{ courses, isHideCreateButton: true, setFilterObject, state }}
+          {...{
+            courses,
+            isHideCreateButton: true,
+            setFilterObject,
+            state,
+            filters,
+          }}
         />
       </SearchLayout>
     );
   }
-
   return (
-    <Layout
-      _header={{
-        title: getTitle(),
-        iconComponent: (
-          <Button
-            rounded="full"
-            variant="outline"
-            bg={colors.primaryLight}
-            px={4}
-            py={1}
-            rightIcon={
-              <IconByName
-                name="ArrowDownSLineIcon"
-                isDisabled
-                _icon={{ size: 20 }}
-              />
-            }
-            onPress={(e) => setShowModalSort(true)}
-          >
-            <BodyLarge textTransform="capitalize" color={colors.primary}>
-              {t("SORT")}
-            </BodyLarge>
-          </Button>
-        ),
-      }}
-      _appBar={{
-        languages: manifest.languages,
-        isEnableSearchBtn: true,
-        setSearch,
-        setSearchState,
-      }}
-      subHeader={<H2 textTransform="inherit">{getSubTitle()}</H2>}
-      _subHeader={{ bg: colors.cardBg }}
-      _footer={footerLinks}
-    >
+    <Layout>
       <Children
         {...{
           courses,
@@ -207,12 +236,12 @@ export default function VideoList({ footerLinks, appName }) {
           setShowModalSort,
           appName,
           state,
+          filters,
         }}
       />
     </Layout>
   );
 }
-
 const Children = ({
   state,
   courses,
@@ -220,31 +249,29 @@ const Children = ({
   showModalSort,
   setShowModalSort,
   appName,
+  filters,
 }) => {
   const { t } = useTranslation();
   const [sortData, setSortData] = React.useState();
-
   const handleSort = (obejct) => {
     const newSort = { [obejct.attribute]: obejct.value };
     const telemetryData = telemetryFactory.interact({
       appName,
-      type: "MyLearnings-Sort",
+      type: "Course-Sort",
       sortType: newSort,
     });
     capture("INTERACT", telemetryData);
     setSortData(newSort);
   };
-
   const handleFilter = (obejct) => {
-    const telemetryData = telemetryFactory.interact({
-      appName,
-      type: "MyLearnings-Filter",
-      filterObject: obejct,
-    });
-    capture("INTERACT", telemetryData);
+    // const telemetryData = telemetryFactory.interact({
+    //   appName,
+    //   type: "Course-Filter",
+    //   filterObject: obejct,
+    // });
+    // capture("INTERACT", telemetryData);
     setFilterObject(obejct);
   };
-
   const getState = () => {
     if (state === ONGOING) {
       return t("ONGOING");
@@ -254,33 +281,27 @@ const Children = ({
       return t("COMPLETED");
     }
   };
-
   return (
     <Stack>
-      <FilterButton
+      {" "}
+      {/* <FilterButton
         getObject={handleFilter}
         _box={{ pt: 5, px: 5 }}
-        _actionSheet={{ bg: colors.cardBg }}
-        _button={{ bg: colors.primaryLight, px: "15px", py: "2" }}
-        _filterButton={{
-          rightIcon: "",
-          bg: colors.white,
-          color: colors.primary,
-        }}
+        _actionSheet={{ bg: "mylearning.cardBg" }}
         resetButtonText={t("COLLAPSE")}
-        color={colors.primary}
-        filters={newDefaultInputs}
-      />
+        filters={filters}
+      /> */}
       <VStack>
         <Box
-          bg={colors.white}
+          bg={"mylearning.white"}
           pt="0"
           p="5"
           mb="4"
           roundedBottom={"xl"}
           shadow={2}
         >
-          <VideoComponent
+          <div className={styles.heading}> Course Content</div>
+          <MyCoursesComponent
             seeButton={<React.Fragment />}
             appName={appName}
             data={courses}
@@ -304,24 +325,24 @@ const Children = ({
         onClose={() => setShowModalSort(false)}
       >
         <Stack width={"100%"} maxH={"100%"}>
-          <Actionsheet.Content alignItems={"left"} bg={colors.cardBg}>
+          {/* <Actionsheet.Content alignItems={"left"} bg={"mylearning.cardBg"}>
             <HStack justifyContent={"space-between"}>
               <Stack p={5} pt={2} pb="15px">
                 <H2>{t("SORT")}</H2>
               </Stack>
               <IconByName
                 name="CloseCircleLineIcon"
-                color={colors.cardCloseIcon}
+                color={"mylearning.cardCloseIcon"}
                 onPress={(e) => setShowModalSort(false)}
               />
             </HStack>
-          </Actionsheet.Content>
-          <ScrollView width={"100%"} space="1" bg={colors.coolGray}>
-            <VStack bg={colors.white} width={"100%"} space="1">
+          </Actionsheet.Content> */}
+          <ScrollView width={"100%"} space="1" bg={"mylearning.coolGray"}>
+            <VStack bg={"mylearning.white"} width={"100%"} space="1">
               {sortArray.map((value, index) => (
                 <Box key={index}>
                   <Box px="5" py="4">
-                    <H3 color={colors.grayLight}>{value?.title}</H3>
+                    <H3 color={"mylearning.grayLight"}>{value?.title}</H3>
                   </Box>
                   {value?.data &&
                     value.data.map((item, subIndex) => {
@@ -332,7 +353,7 @@ const Children = ({
                         <Pressable
                           key={subIndex}
                           p="5"
-                          bg={isSelected ? colors.grayLight : ""}
+                          bg={isSelected ? "mylearning.grayLight" : ""}
                           onPress={(e) => handleSort(item)}
                         >
                           <HStack
@@ -342,7 +363,7 @@ const Children = ({
                           >
                             <IconByName
                               isDisabled
-                              color={isSelected ? colors.primary : ""}
+                              color={isSelected ? "mylearning.primary" : ""}
                               name={item.icon}
                             />
                             <Text>{item.name}</Text>
@@ -355,7 +376,7 @@ const Children = ({
               <Box p="5">
                 <Button
                   colorScheme="button"
-                  _text={{ color: colors.white }}
+                  _text={{ color: "mylearning.white" }}
                   onPress={(e) => setShowModalSort(false)}
                 >
                   {t("CONTINUE")}
@@ -367,8 +388,4 @@ const Children = ({
       </Actionsheet>
     </Stack>
   );
-};
-
-const LessonPlans = () => {
-  return <h4>LessonPlans</h4>;
 };

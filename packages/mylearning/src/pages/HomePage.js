@@ -11,6 +11,7 @@ const colors = overrideColorTheme(colorTheme);
 import { useNavigate } from "react-router-dom";
 import IconByName from "@shiksha/common-lib";
 import VoiceSearch from "./VoiceSearch";
+import VirtualSchool from "./VirtualSchool";
 
 export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
   const { t } = useTranslation();
@@ -32,6 +33,9 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
   };
   const jugalbandi = () => {
     window.open("http://139.59.21.40:5001/");
+  };
+  const virtualschool = () => {
+    navigate("/virtualschool");
   };
 
   return (
@@ -84,6 +88,9 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
             </button>
             <button onClick={jugalbandi} className={styles.button}>
               Jugalbandi
+            </button>
+            <button onClick={virtualschool} className={styles.button}>
+              Virtual School
             </button>
           </div>
         </div>
