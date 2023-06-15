@@ -104,19 +104,18 @@ function Teacherqr() {
               setData(result.text);
               localStorage.setItem("scannedcode", lastSlug);
               dialcodeFunction(lastSlug);
-              // window.open("http://localhost:3010/teacherapp", "_blank");
-              // setTimeout(function () {
-              //   window.open("http://localhost:3010/teacherapp", "_blank");
-              // }, 500);
-
-              window.open(
-                "https://shikshademo.uniteframework.io/teacherapp",
-                "_self"
-              );
+              // window.open("http://localhost:3010/teacherapp", "_self");
 
               // setTimeout(function () {
-              //   window.open("https://shikshademo.uniteframework.io/studentapp");
-              // }, 500);
+              //   window.open("http://localhost:3010/teacherapp", "_self");
+              // }, 1000);
+
+              setTimeout(function () {
+                window.open(
+                  "https://shikshademo.uniteframework.io/teacherapp",
+                  "_self"
+                );
+              }, 1000);
             }
 
             if (!!error) {
