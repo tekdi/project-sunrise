@@ -110,7 +110,7 @@ function Teacherqr() {
               // }, 500);
 
               window.open(
-                "https://shikshademo.uniteframework.io/studentapp",
+                "https://shikshademo.uniteframework.io/teacherapp",
                 "_self"
               );
 
