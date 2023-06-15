@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./TeacherApp.module.css";
 import { useLayout } from "native-base";
+import LaunchIcon from "@mui/icons-material/Launch";
 
 function TeacherApp() {
   const [localqr, setLocalQr] = useState("");
@@ -93,7 +94,8 @@ function TeacherApp() {
       <h3 style={{ color: "red" }}>{description}</h3>
       <button className={styles.button} onClick={myclick0}>
         {" "}
-        Concept Clarity Videos
+        <span> Concept Clarity Videos</span>
+        <LaunchIcon />
       </button>
       <button className={styles.button} onClick={myclick}>
         {" "}
