@@ -9,32 +9,22 @@ function Chatbot() {
 
   useLayoutEffect(() => {
     const savedText = localStorage.getItem("displayText");
-    const savedText2 = localStorage.getItem("displayText2");
-    const savedText3 = localStorage.getItem("displayText3");
-    if (savedText !== null) {
-      const updatedText = savedText.replace(/\s/g, "%20").toLowerCase();
-      setDisplayText(updatedText);
-      console.log(displayText);
-    } else if (savedText2 !== null) {
-      const updatedText2 = savedText2.replace(/\s/g, "%20").toLowerCase();
-      setDisplayText(updatedText2);
-      console.log(displayText);
-    } else if (savedText3 !== null) {
-      const updatedText3 = savedText3.replace(/\s/g, "%20").toLowerCase();
 
-      setDisplayText(updatedText3);
+    if (savedText !== null) {
+      // const updatedText = savedText.replace(/\s/g, "%20").toLowerCase();
+      setDisplayText(savedText);
       console.log(displayText);
     }
   }, []);
 
-  const back = () => {
-    navigate("/studentapp");
-  };
+  // const back = () => {
+  //   navigate("/studentapp");
+  // };
 
   return (
     <React.Fragment>
       <AppBar />
-      <h2 className={styles.student}>Student App</h2>
+      <h2 className={styles.student}>QR based AI Tool</h2>
       <br></br>
       <div className={styles.text}>Chapter 6</div>
       {/* <div className={styles.text}>{`${displayText}`}</div> */}
@@ -42,9 +32,9 @@ function Chatbot() {
         className={styles.iframe}
         src={`https://ncfchat.sunbird.org/ncert/ask?q=${displayText}`}
       ></iframe>
-      <button className={styles.backbutton} onClick={back}>
+      {/* <button className={styles.backbutton} onClick={back}>
         Back
-      </button>
+      </button> */}
     </React.Fragment>
   );
 }

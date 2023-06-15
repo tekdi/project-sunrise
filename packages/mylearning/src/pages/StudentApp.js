@@ -35,17 +35,17 @@ function StudentApp() {
     setDescription(localstoragedescription);
   }, []);
 
-  useEffect(() => {
-    for (var i = localStorage.length - 1; i >= 0; i--) {
-      var key = localStorage.key(i);
+  // useEffect(() => {
+  //   for (var i = localStorage.length - 1; i >= 0; i--) {
+  //     var key = localStorage.key(i);
 
-      if (key !== "token") {
-        localStorage.removeItem(key);
-      }
-    }
+  //     if (key !== "token") {
+  //       localStorage.removeItem(key);
+  //     }
+  //   }
 
-    localStorage.clear();
-  }, []);
+  //   // localStorage.clear();
+  // }, []);
 
   const myclick0 = () => {
     window.open(`https://diksha.gov.in/get/dial/${localqr}`);
@@ -62,7 +62,7 @@ function StudentApp() {
   const myclick2 = () => {
     console.log(displayText2);
     localStorage.setItem(
-      "displayText2",
+      "displayText",
       `Practice Questions on ${description} for ${studentgrade} subject ${subject}`
     );
     navigate("/studentapp/chatbot");
@@ -70,7 +70,7 @@ function StudentApp() {
   const myclick3 = () => {
     console.log(displayText3);
     localStorage.setItem(
-      "displayText3",
+      "displayText",
       `Vocabulary on ${description} for ${studentgrade} subject ${subject}`
     );
     navigate("/studentapp/chatbot");
