@@ -6,6 +6,15 @@ import { AppBar } from "@shiksha/common-lib";
 function Chatbot() {
   const [displayText, setDisplayText] = useState("");
   const navigate = useNavigate();
+  const iframeRef = useRef(null);
+
+  const handleButtonClick = () => {
+    if (iframeRef.current) {
+      const iframeContent =
+        iframeRef.current.contentWindow.document.body.innerHTML;
+      console.log(iframeContent);
+    }
+  };
 
   useLayoutEffect(() => {
     const savedText = localStorage.getItem("displayText");
@@ -33,7 +42,12 @@ function Chatbot() {
       <div className={styles.text}>Chapter 6</div>
       {/* <div className={styles.text}>{`${displayText}`}</div> */}
 
-      <iframe className={styles.iframe} src={displayText}></iframe>
+      <iframe
+        ref={iframeRef}
+        className={styles.iframe}
+        src={displayText}
+      ></iframe>
+      <button onClick={handleButtonClick}>Get iframe body</button>
       {/* <button className={styles.backbutton} onClick={back}>
         Back
       </button> */}

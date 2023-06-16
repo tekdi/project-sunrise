@@ -44,6 +44,9 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
   const virtualschool = () => {
     navigate("/virtualschool");
   };
+  const storybot = () => {
+    navigate("/storybot");
+  };
 
   return (
     <Layout
@@ -85,6 +88,9 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
             </button>
             <button onClick={toc} className={styles.button}>
               Course TOC
+            </button>
+            <button onClick={storybot} className={styles.button}>
+              Story Bot
             </button>
           </div>
         </div>

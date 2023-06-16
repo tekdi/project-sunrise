@@ -20,6 +20,8 @@ import Chatbot from "pages/Chatbot";
 import TeacherApp from "pages/TeacherApp";
 import Teacherqr from "pages/TeacherQr";
 import VirtualSchool from "pages/VirtualSchool";
+import StoryBot from "pages/StoryBot";
+import ChatPage from "pages/ChatPage";
 
 const StudentprogramLessonList = React.lazy(() =>
   import("studentprogram/Lessons")
@@ -107,6 +109,18 @@ function App() {
       moduleName: "mylearning",
       path: "/virtualschool/:gradeNumber/:videolist",
       component: VideoList,
+    },
+
+    {
+      moduleName: "storybot",
+      path: "/storybot",
+      component: StoryBot,
+    },
+
+    {
+      moduleName: "chatpage",
+      path: "/storybot/chatpage",
+      component: ChatPage,
     },
 
     // {
