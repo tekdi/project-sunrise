@@ -33,7 +33,7 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
     navigate("studentprogram/subjects");
   };
   const jugalbandi = () => {
-    window.open("http://139.59.21.40:5001/");
+    window.open("https://doctalk.uniteframework.io/");
   };
   const adaptivelearning = () => {
     window.open("https://alt-shiksha.uniteframework.io/ ");
