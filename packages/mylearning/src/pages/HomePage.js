@@ -47,6 +47,9 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
   const storybot = () => {
     navigate("/storybot");
   };
+  const storyvoicebot = () => {
+    navigate("/voicebot");
+  };
 
   return (
     <Layout
@@ -64,7 +67,12 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
             <button onClick={virtualschool} className={styles.button}>
               Virtual School
             </button>
-            <button className={styles.button}>AI Storybot</button>
+            <button onClick={storybot} className={styles.button}>
+              AI Story Bot
+            </button>
+            <button onClick={storyvoicebot} className={styles.button}>
+              AI Voice Bot
+            </button>
             <button onClick={jugalbandi} className={styles.button}>
               <span> Textbook Mate</span>
               <LaunchIcon />
@@ -88,9 +96,6 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
             </button>
             <button onClick={toc} className={styles.button}>
               Course TOC
-            </button>
-            <button onClick={storybot} className={styles.button}>
-              Story Bot
             </button>
           </div>
         </div>

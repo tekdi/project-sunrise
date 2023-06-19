@@ -22,6 +22,7 @@ import Teacherqr from "pages/TeacherQr";
 import VirtualSchool from "pages/VirtualSchool";
 import StoryBot from "pages/StoryBot";
 import ChatPage from "pages/ChatPage";
+import Microphone from "pages/VoiceBot";
 
 const StudentprogramLessonList = React.lazy(() =>
   import("studentprogram/Lessons")
@@ -121,6 +122,12 @@ function App() {
       moduleName: "chatpage",
       path: "/storybot/chatpage",
       component: ChatPage,
+    },
+
+    {
+      moduleName: "chatpage",
+      path: "/voicebot",
+      component: Microphone,
     },
 
     // {
