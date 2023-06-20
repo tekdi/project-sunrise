@@ -1,23 +1,38 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./StoryBot.module.css";
-import Chatpage from "./ChatPage";
+
 const StoryBot = () => {
   const navigate = useNavigate(); // React Router's navigate function for navigation
 
   const options = [
-    { value: "english", label: "English" },
-    { value: "hindi", label: "Hindi" },
-    { value: "matathi", label: "Marathi" },
+    { value: "en", label: "English" },
+    { value: "hi", label: "Hindi" },
+    { value: "gu", label: "Gujarati" },
+    { value: "ma", label: "Marathi" },
+    { value: "pu", label: "Punjabi" },
+    { value: "ta", label: "Tamil" },
+    { value: "mal", label: "Malyalam" },
+    { value: "Ka", label: "Kannada" },
+    { value: "te", label: "Telugu" },
   ];
   const [selectedOption, setSelectedOption] = useState("");
+  const [name, setName] = useState("");
   const handleChange = (e) => {
     setSelectedOption(e.target.value);
   };
-  const handleButtonClick = () => {
-    // Navigate to another page using navigate()
-    navigate(`/storybot/chatpage`);
+  const handleNameChange = (e) => {
+    setName(e.target.value);
   };
+  const handleButtonClick = () => {
+    // Check if the name is not empty
+    if (name.trim() !== "") {
+      // Navigate to another page using navigate()
+      navigate(`/storybot/chatpage/${name}/${selectedOption}`);
+    }
+  };
+
+  const isButtonDisabled = name.trim() === "";
   return (
     <div className={styles.container}>
       <div className={styles.mobileScreen}>
@@ -33,6 +48,9 @@ const StoryBot = () => {
             type="text"
             className={styles.textField}
             placeholder="Your Name"
+            value={name}
+            onChange={handleNameChange}
+            required // Make the input required
           />{" "}
           <div>
             <select
@@ -40,7 +58,7 @@ const StoryBot = () => {
               onChange={handleChange}
               className={styles.dropdown}
             >
-              <option value="">Select an option</option>
+              <option value="">Select a Language</option>
               {options.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
@@ -48,7 +66,11 @@ const StoryBot = () => {
               ))}
             </select>
             <div>
-              <button className={styles.btn} onClick={handleButtonClick}>
+              <button
+                className={styles.btn}
+                onClick={handleButtonClick}
+                disabled={isButtonDisabled}
+              >
                 Start Storytelling!
               </button>
             </div>
@@ -58,5 +80,4 @@ const StoryBot = () => {
     </div>
   );
 };
-
 export default StoryBot;

@@ -120,7 +120,7 @@ function App() {
 
     {
       moduleName: "chatpage",
-      path: "/storybot/chatpage",
+      path: "/storybot/chatpage/:name/:selectedOption",
       component: ChatPage,
     },
 
