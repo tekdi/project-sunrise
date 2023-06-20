@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { FaMicrophone } from "react-icons/fa";
 import styles from "./VoiceBot.module.css";
 import Select from "react-select";
-import Aisearch from "./Aisearch";
 
 const Microphone = () => {
   const [transcript, setTranscript] = useState(null);
@@ -13,11 +12,8 @@ const Microphone = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const recognitionRef = useRef(null);
   const [finalvoice, setFinalvoice] = useState(null);
-  const [audioPlaying, setAudioPlaying] = useState(false);
+  const [audioPlaying, setAudioPlaying] = useState(false); // New state for tracking audio playing status
   const imagePath2 = require("../assets/mic.png");
-
-  const [utterance, setUtterance] = useState(null);
-  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     recognitionRef.current = new window.webkitSpeechRecognition();
@@ -25,62 +21,23 @@ const Microphone = () => {
     recognitionRef.current.interimResults = true;
   }, []);
 
-  // useEffect(() => {
-  //   let timer;
-  //   const handleFinalVoiceChange = () => {
-  //     // handleAudioPlay();
-  //   };
-
-  //   const delay = 1000;
-
-  //   if (aiStory !== null) {
-  //     clearTimeout(timer);
-  //     timer = setTimeout(handleFinalVoiceChange, delay);
-  //   }
-
-  //   return () => {
-  //     clearTimeout(timer);
-  //   };
-  // }, [aiStory]);
-
   useEffect(() => {
-    const synth = window.speechSynthesis;
-    const u = new SpeechSynthesisUtterance(aiStory);
-
-    setUtterance(u);
-
-    return () => {
-      synth.cancel();
+    let timer;
+    const handleFinalVoiceChange = () => {
+      handleAudioPlay();
     };
-  }, [aiStory]);
 
-  const handlePlay = () => {
-    const synth = window.speechSynthesis;
+    const delay = 3000;
 
-    if (isPaused) {
-      synth.resume();
+    if (finalvoice !== null) {
+      clearTimeout(timer);
+      timer = setTimeout(handleFinalVoiceChange, delay);
     }
 
-    synth.speak(utterance);
-
-    setIsPaused(true);
-  };
-
-  const handlePause = () => {
-    const synth = window.speechSynthesis;
-
-    synth.pause();
-
-    setIsPaused(true);
-  };
-
-  const handleStop = () => {
-    const synth = window.speechSynthesis;
-
-    synth.cancel();
-
-    setIsPaused(false);
-  };
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [finalvoice]);
 
   const options = [
     { value: "en", label: "English" },
@@ -106,7 +63,6 @@ const Microphone = () => {
         const currentTranscript =
           event.results[event.results.length - 1][0].transcript;
         console.log("Transcript:", currentTranscript);
-
         await storybot(currentTranscript);
         setTranscript(currentTranscript);
       };
@@ -130,15 +86,14 @@ const Microphone = () => {
       setRecording(false);
     }
   };
-
-  // const handleAudioPlay = () => {
-  //   console.log("INSIDE BUTTON PLAY");
-  //   if (finalvoice) {
-  //     const audio = new Audio();
-  //     audio.src = `data:audio/wav;base64,${finalvoice}`;
-  //     audio.play();
-  //   }
-  // };
+  const handleAudioPlay = () => {
+    console.log("INSIDE BUTTON PLAY");
+    if (finalvoice) {
+      const audio = new Audio();
+      audio.src = `data:audio/wav;base64,${finalvoice}`;
+      audio.play();
+    }
+  };
 
   const sendAudioToAIForBharat = async () => {
     try {
@@ -178,53 +133,51 @@ const Microphone = () => {
         payload,
         { headers: headers }
       );
-
       const botResponse = response.data.bot_sentence;
 
-      // await storyvoice(botResponse);
+      await storyvoice(botResponse);
 
       setAistory(botResponse);
 
       console.log("STORY BOT OUTPUT");
-
       console.log(botResponse);
     } catch (error) {
       console.error("AI for Bharat API error:", error);
     }
   };
 
-  // const storyvoice = async (botResponse) => {
-  //   try {
-  //     console.log("STORY VOICE INPUT");
-  //     console.log(botResponse);
-  //     console.log("LANGUAGE");
-  //     console.log(selectedLanguage);
+  const storyvoice = async (botResponse) => {
+    try {
+      console.log("STORY VOICE INPUT");
+      console.log(botResponse);
+      console.log("LANGUAGE");
+      console.log(selectedLanguage);
 
-  //     const payload = {
-  //       controlConfig: { dataTracking: true },
-  //       input: [{ source: botResponse }],
-  //       config: {
-  //         gender: "male",
-  //         language: { sourceLanguage: selectedLanguage },
-  //       },
-  //     };
+      const payload = {
+        controlConfig: { dataTracking: true },
+        input: [{ source: botResponse }],
+        config: {
+          gender: "male",
+          language: { sourceLanguage: selectedLanguage },
+        },
+      };
 
-  //     const response = await axios.post(
-  //       "https://demo-api.models.ai4bharat.org/inference/tts",
-  //       payload
-  //     );
+      const response = await axios.post(
+        "https://demo-api.models.ai4bharat.org/inference/tts",
+        payload
+      );
 
-  //     const responseArray = response.data.audio;
-  //     const audioData = responseArray[0].audioContent;
+      const responseArray = response.data.audio;
+      const audioData = responseArray[0].audioContent;
 
-  //     setFinalvoice(audioData);
+      setFinalvoice(audioData);
 
-  //     console.log("INSIDE VOICE BOT RESPONSE FINAL OUTPUT");
-  //     console.log(audioData);
-  //   } catch (error) {
-  //     console.error("AI for Bharat VOICE API error:", error);
-  //   }
-  // };
+      console.log("INSIDE VOICE BOT RESPONSE FINAL OUTPUT");
+      console.log(audioData);
+    } catch (error) {
+      console.error("AI for Bharat VOICE API error:", error);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -232,6 +185,7 @@ const Microphone = () => {
         <p>Please Select Language</p>
         <Select options={options} onChange={handleLanguageChange} />
         <br />
+
         <button
           className={buttonClass ? styles.ripple : null}
           onClick={() => {
@@ -258,9 +212,6 @@ const Microphone = () => {
             <audio src={`data:audio/wav;base64,${finalvoice}`} />
           </div>
         )}
-        <button onClick={handlePlay}>{isPaused ? "Resume" : "Play"}</button>{" "}
-        <button onClick={handlePause}>Pause</button>{" "}
-        <button onClick={handleStop}>Stop</button>
       </div>
     </div>
   );
