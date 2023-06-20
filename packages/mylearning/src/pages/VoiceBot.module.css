@@ -8,3 +8,33 @@
 .center {
   text-align: center;
 }
+
+button {
+  background-color: #f87558;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 2s;
+  background-position: center;
+  padding: 15px;
+}
+
+/* ripple effect */
+
+.ripple {
+  animation-duration: 1.5s;
+  animation-name: ripples;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  transform-origin: center;
+}
+
+@keyframes ripples {
+  from {
+    background-color: #f87558;
+  }
+
+  to {
+    opacity: 0.9;
+    filter: brightness(1.5);
+  }
+}

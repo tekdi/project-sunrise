@@ -6,12 +6,14 @@ import Select from "react-select";
 
 const Microphone = () => {
   const [transcript, setTranscript] = useState(null);
+  const [buttonClass, setButtonClass] = useState(false);
   const [aiStory, setAistory] = useState(null);
   const [recording, setRecording] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const recognitionRef = useRef(null);
   const [finalvoice, setFinalvoice] = useState(null);
   const [audioPlaying, setAudioPlaying] = useState(false); // New state for tracking audio playing status
+  const imagePath2 = require("../assets/mic.png");
 
   useEffect(() => {
     recognitionRef.current = new window.webkitSpeechRecognition();
@@ -39,9 +41,9 @@ const Microphone = () => {
 
   const options = [
     { value: "en", label: "English" },
-    { value: "hi", label: "Hindi" },
-    // { value: "mr", label: "Marathi" },
-    // { value: "gu", label: "Gujarati" },
+    // { value: "hi", label: "Hindi" },
+    { value: "mr", label: "Marathi" },
+    { value: "gu", label: "Gujarati" },
     // { value: "kn", label: "Kannada" },
     // { value: "ta", label: "Tamil" },
     // { value: "te", label: "Telugu" },
@@ -116,13 +118,20 @@ const Microphone = () => {
       console.log(currentTranscript);
 
       const payload = {
-        sentence: currentTranscript,
-        secret_key: "Jt2YwfZbhYkkta6",
+        input: currentTranscript,
+        input_lang: selectedLanguage,
+        output_lang: selectedLanguage,
+      };
+
+      const headers = {
+        secret: "Jt2YwfZbhYkkta6",
       };
 
       const response = await axios.post(
         "https://makeastory.uniteframework.io/play_story_game",
-        payload
+
+        payload,
+        { headers: headers }
       );
       const botResponse = response.data.bot_sentence;
 
@@ -176,11 +185,26 @@ const Microphone = () => {
         <p>Please Select Language</p>
         <Select options={options} onChange={handleLanguageChange} />
         <br />
-        <button className={styles.mic} onClick={handleClick}>
+        {/* <button className={styles.mic} onClick={handleClick}>
           <FaMicrophone
             size={50}
             color={recording ? "red" : "blue"}
             style={{ marginRight: "1px" }}
+          />
+        </button> */}
+        <button
+          className={buttonClass ? styles.ripple : null}
+          onClick={() => {
+            setButtonClass(!buttonClass);
+            handleClick();
+          }}
+        >
+          {" "}
+          <img
+            src={imagePath2}
+            width={50}
+            height={50}
+            style={{ border: "none" }}
           />
         </button>
         {recording && <p>Recording in progress...</p>}

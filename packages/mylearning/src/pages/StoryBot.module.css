@@ -108,7 +108,7 @@
 }
 .chatinput .searchButton {
   flex: 30%;
-  /* height: 20px; */
+  height: 47px;
   background-color: #4285f4;
   position: relative;
   border-radius: 5px;
@@ -117,6 +117,7 @@
   padding: 0 8px;
   border-radius: 5px;
   /* border-bottom-right-radius: 20px; */
+  margin-top: 7px;
 }
 .searchButton:hover {
   background-color: #3169c4;
@@ -140,7 +141,7 @@
   margin-right: 5px;
 }
 .botMessage {
-  background-color: #c2d7e7;
+  background-color: #e9c9c9;
   color: #000000;
   margin-top: 20px;
   padding: 10px;
@@ -149,4 +150,14 @@
   margin-right: 250px;
   margin-left: 5px;
   width: 50%;
+}
+.welcomeMessage {
+  color: whitesmoke;
+  font-size: x-large;
+  font-weight: 800;
+}
+.welcomePara {
+  color: whitesmoke;
+  font-size: large;
+  margin: 0px 10px;
 }
