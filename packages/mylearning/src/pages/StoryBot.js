@@ -16,23 +16,53 @@ const StoryBot = () => {
     { value: "Ka", label: "Kannada" },
     { value: "te", label: "Telugu" },
   ];
+
+  const ageOptions = [
+    { value: "18", label: "18" },
+    { value: "19", label: "19" },
+    { value: "20", label: "20" },
+    // Add more age options as needed
+  ];
+
+  const topicOptions = [
+    { value: "adventure", label: "Adventure" },
+    { value: "jungle", label: "Jungle" },
+    { value: "animal", label: "Animals" }, // Add more topic options as needed
+  ];
+
   const [selectedOption, setSelectedOption] = useState("");
   const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [selectedTopic, setSelectedTopic] = useState("");
+
+  const handleTopicChange = (e) => {
+    setSelectedTopic(e.target.value);
+  };
+
+  const handleAgeChange = (e) => {
+    setAge(e.target.value);
+  };
+
   const handleChange = (e) => {
     setSelectedOption(e.target.value);
   };
+
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
+
   const handleButtonClick = () => {
     // Check if the name is not empty
     if (name.trim() !== "") {
       // Navigate to another page using navigate()
-      navigate(`/storybot/chatpage/${name}/${selectedOption}`);
+      navigate(
+        `/storybot/chatpage/${name}/${selectedOption}/${age}/${selectedTopic}`
+      );
     }
   };
 
   const isButtonDisabled = name.trim() === "";
+
   return (
     <div className={styles.container}>
       <div className={styles.mobileScreen}>
@@ -50,8 +80,31 @@ const StoryBot = () => {
             placeholder="Your Name"
             value={name}
             onChange={handleNameChange}
-            required // Make the input required
-          />{" "}
+          />
+          <select
+            value={age}
+            onChange={handleAgeChange}
+            className={styles.dropdown}
+          >
+            <option value="">Select your Age</option>
+            {ageOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>{" "}
+          <select
+            value={selectedTopic}
+            onChange={handleTopicChange}
+            className={styles.dropdown}
+          >
+            <option value="">Select a Topic</option>
+            {topicOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>{" "}
           <div>
             <select
               value={selectedOption}
@@ -66,13 +119,14 @@ const StoryBot = () => {
               ))}
             </select>
             <div>
+              {" "}
               <button
                 className={styles.btn}
                 onClick={handleButtonClick}
                 disabled={isButtonDisabled}
               >
                 Start Storytelling!
-              </button>
+              </button>{" "}
             </div>
           </div>
         </div>

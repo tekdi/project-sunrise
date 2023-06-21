@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import { FaMicrophone } from "react-icons/fa";
 import styles from "./VoiceBot.module.css";
 import Select from "react-select";
@@ -11,11 +11,16 @@ const Microphone = () => {
   const [aiStory, setAistory] = useState(null);
   const [recording, setRecording] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [selectedAge, setSelectedAge] = useState("");
+  const [selectedTopic, setSelectedTopic] = useState("");
   const recognitionRef = useRef(null);
   const [finalvoice, setFinalvoice] = useState(null);
   const [audioPlaying, setAudioPlaying] = useState(false);
   const imagePath2 = require("../assets/mic.png");
-
+  const imagePath3 = require("../assets/play.png");
+  const imagePath4 = require("../assets/pause.png");
+  const imagePath5 = require("../assets/stop.png");
+  const [name, setName] = useState("");
   const [utterance, setUtterance] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -23,25 +28,48 @@ const Microphone = () => {
     recognitionRef.current = new window.webkitSpeechRecognition();
     recognitionRef.current.continuous = true;
     recognitionRef.current.interimResults = true;
+
+    recognitionRef.current.onresult = async (event) => {
+      let currentTranscript = "";
+      for (let i = 0; i < event.results.length; i++) {
+        currentTranscript += event.results[i][0].transcript + " ";
+      }
+      currentTranscript = currentTranscript.trim();
+      console.log("Transcript:", currentTranscript);
+      setTranscript(currentTranscript);
+      await storybot(currentTranscript);
+    };
+
+    recognitionRef.current.onerror = (event) => {
+      console.error("Speech recognition error:", event.error);
+      setRecording(false);
+    };
+
+    recognitionRef.current.onend = () => {
+      if (recording) {
+        setRecording(false);
+        sendAudioToAIForBharat();
+      }
+    };
   }, []);
 
-  // useEffect(() => {
-  //   let timer;
-  //   const handleFinalVoiceChange = () => {
-  //     // handleAudioPlay();
-  //   };
+  const handleFinalVoiceChange = () => {
+    handlePlay();
+  };
 
-  //   const delay = 1000;
+  useEffect(() => {
+    let timer;
+    const delay = 4000;
 
-  //   if (aiStory !== null) {
-  //     clearTimeout(timer);
-  //     timer = setTimeout(handleFinalVoiceChange, delay);
-  //   }
+    if (aiStory !== null) {
+      clearTimeout(timer);
+      timer = setTimeout(handleFinalVoiceChange, delay);
+    }
 
-  //   return () => {
-  //     clearTimeout(timer);
-  //   };
-  // }, [aiStory]);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [aiStory]);
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -85,12 +113,26 @@ const Microphone = () => {
   const options = [
     { value: "en", label: "English" },
     // { value: "hi", label: "Hindi" },
-    { value: "mr", label: "Marathi" },
-    { value: "gu", label: "Gujarati" },
+    // { value: "mr", label: "Marathi" },
+    // { value: "gu", label: "Gujarati" },
     // { value: "kn", label: "Kannada" },
     // { value: "ta", label: "Tamil" },
     // { value: "te", label: "Telugu" },
     // { value: "ml", label: "Malayalam" },
+  ];
+
+  const age = [
+    { value: "10", label: "10 years" },
+    { value: "11", label: "11 years" },
+    { value: "12", label: "12 years" },
+  ];
+
+  const topic = [
+    { value: "Jungle", label: "Jungle" },
+    { value: "School", label: "School" },
+    { value: "Animals", label: "Animals" },
+    { value: "Plants", label: "Plants" },
+    { value: "Earth", label: "Earth" },
   ];
 
   const handleLanguageChange = (selectedOption) => {
@@ -98,31 +140,18 @@ const Microphone = () => {
     console.log("Selected Language:", selectedOption.value);
   };
 
+  const handleAgeChange = (selectedOption) => {
+    setSelectedAge(selectedOption.value);
+    console.log("Selected Age:", selectedOption.value);
+  };
+
+  const handleTopicChange = (selectedOption) => {
+    setSelectedTopic(selectedOption.value);
+    console.log("Selected Topic:", selectedOption.value);
+  };
+
   const handleClick = () => {
     if (!recording) {
-      recognitionRef.current.onresult = async (event) => {
-        console.log("event.results");
-        console.log(event.results);
-        const currentTranscript =
-          event.results[event.results.length - 1][0].transcript;
-        console.log("Transcript:", currentTranscript);
-
-        await storybot(currentTranscript);
-        setTranscript(currentTranscript);
-      };
-
-      recognitionRef.current.onerror = (event) => {
-        console.error("Speech recognition error:", event.error);
-        setRecording(false);
-      };
-
-      recognitionRef.current.onend = () => {
-        if (recording) {
-          setRecording(false);
-          sendAudioToAIForBharat();
-        }
-      };
-
       recognitionRef.current.start();
       setRecording(true);
     } else {
@@ -130,15 +159,6 @@ const Microphone = () => {
       setRecording(false);
     }
   };
-
-  // const handleAudioPlay = () => {
-  //   console.log("INSIDE BUTTON PLAY");
-  //   if (finalvoice) {
-  //     const audio = new Audio();
-  //     audio.src = `data:audio/wav;base64,${finalvoice}`;
-  //     audio.play();
-  //   }
-  // };
 
   const sendAudioToAIForBharat = async () => {
     try {
@@ -149,8 +169,9 @@ const Microphone = () => {
         "https://ai-for-bharat-speech-to-text-api",
         formData
       );
-      const { text } = response.data;
-      console.log("AI Result:", text);
+      const text = response;
+      console.log("AI Result:");
+      console.log(text);
       // setTranscript(text);
     } catch (error) {
       console.error("AI for Bharat API error:", error);
@@ -166,6 +187,8 @@ const Microphone = () => {
         input: currentTranscript,
         input_lang: selectedLanguage,
         output_lang: selectedLanguage,
+        age: selectedAge,
+        theme: selectedTopic,
       };
 
       const headers = {
@@ -174,7 +197,6 @@ const Microphone = () => {
 
       const response = await axios.post(
         "https://makeastory.uniteframework.io/play_story_game",
-
         payload,
         { headers: headers }
       );
@@ -193,44 +215,19 @@ const Microphone = () => {
     }
   };
 
-  // const storyvoice = async (botResponse) => {
-  //   try {
-  //     console.log("STORY VOICE INPUT");
-  //     console.log(botResponse);
-  //     console.log("LANGUAGE");
-  //     console.log(selectedLanguage);
-
-  //     const payload = {
-  //       controlConfig: { dataTracking: true },
-  //       input: [{ source: botResponse }],
-  //       config: {
-  //         gender: "male",
-  //         language: { sourceLanguage: selectedLanguage },
-  //       },
-  //     };
-
-  //     const response = await axios.post(
-  //       "https://demo-api.models.ai4bharat.org/inference/tts",
-  //       payload
-  //     );
-
-  //     const responseArray = response.data.audio;
-  //     const audioData = responseArray[0].audioContent;
-
-  //     setFinalvoice(audioData);
-
-  //     console.log("INSIDE VOICE BOT RESPONSE FINAL OUTPUT");
-  //     console.log(audioData);
-  //   } catch (error) {
-  //     console.error("AI for Bharat VOICE API error:", error);
-  //   }
-  // };
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.center}>
         <p>Please Select Language</p>
         <Select options={options} onChange={handleLanguageChange} />
+        <p>Select your Age</p>
+        <Select options={age} onChange={handleAgeChange} />
+        <p>Select a Topic for your Story</p>
+        <Select options={topic} onChange={handleTopicChange} />
         <br />
         <button
           className={buttonClass ? styles.ripple : null}
@@ -249,18 +246,45 @@ const Microphone = () => {
         </button>
         {recording && <p>Recording in progress...</p>}
         <p>{transcript}</p>
-        <p>{aiStory}</p>
-        {finalvoice && (
+        {/* <p>{aiStory}</p> */}
+        {/* {finalvoice && (
           <div>
             <button style={{ display: "none" }} onClick={handleAudioPlay}>
               {audioPlaying ? "Pause Audio" : "Play Audio"}
             </button>
             <audio src={`data:audio/wav;base64,${finalvoice}`} />
           </div>
-        )}
-        <button onClick={handlePlay}>{isPaused ? "Resume" : "Play"}</button>{" "}
-        <button onClick={handlePause}>Pause</button>{" "}
-        <button onClick={handleStop}>Stop</button>
+        )} */}
+        <button
+          className={isPaused ? styles.ripple : null}
+          onClick={handlePlay}
+        >
+          {/* {isPaused ? "Resume" : "Play"} */}
+          <img
+            src={imagePath3}
+            width={40}
+            height={40}
+            style={{ border: "none" }}
+          />
+        </button>{" "}
+        <button onClick={handlePause}>
+          {/* Pause */}
+          <img
+            src={imagePath4}
+            width={40}
+            height={40}
+            style={{ border: "none" }}
+          />
+        </button>{" "}
+        <button onClick={handleStop}>
+          {/* Stop */}
+          <img
+            src={imagePath5}
+            width={40}
+            height={40}
+            style={{ border: "none" }}
+          />
+        </button>
       </div>
     </div>
   );
