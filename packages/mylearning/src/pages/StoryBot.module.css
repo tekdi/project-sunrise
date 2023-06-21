@@ -77,11 +77,12 @@
   cursor: pointer;
 }
 .bottomContainer {
-  position: sticky;
-  bottom: -5px;
+  position: relative;
+  bottom: 5px;
   width: 100%;
   display: flex;
-  padding: 7px;
+  padding: 10px;
+  border-width: 0px;
 }
 .chatinput {
   display: flex;
@@ -90,19 +91,20 @@
   bottom: 0;
 }
 .chatinput .bottomInput {
-  flex: 70%;
+  flex: 100%;
   padding: 11px;
   position: relative;
-  border-radius: 5px;
-  font-size: x-large;
+
+  font-size: medium;
   font-family: Arial, Helvetica, sans-serif;
-  resize: none;
+  resize: both;
   overflow-y: auto;
   box-sizing: border-box;
 }
 .searchButton {
   flex: 30%;
-  height: 47px;
+  height: 44px;
+  color: #f5f5f5;
   background-color: #4285f4;
   position: relative;
   border-radius: 5px;
@@ -111,6 +113,7 @@
   padding: 0 8px;
   border-radius: 5px;
   margin-top: 7px;
+  bottom: 5px;
 }
 .searchButton:hover {
   background-color: #3169c4;

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import styles from "./StoryBot.module.css";
 import { useParams } from "react-router-dom";
+const imagePath2 = require("../assets/send.png");
 
 const ChatPage = () => {
   const { name, selectedOption, ageOption, topicOption } = useParams();
@@ -179,7 +180,7 @@ const ChatPage = () => {
           {/* inputext  */}
           <div className={styles.chatinput}>
             <div className={styles.bottomContainer}>
-              <textarea
+              <input
                 ref={textareaRef}
                 className={styles.bottomInput}
                 placeholder="Enter text here"
@@ -196,7 +197,12 @@ const ChatPage = () => {
               onClick={(event) => handleSearch(event)}
               disabled={searchText.trim() === ""}
             >
-              Send
+              <img
+                src={imagePath2}
+                width={30}
+                height={30}
+                style={{ border: "none" }}
+              />
             </button>
           </div>
         </div>
