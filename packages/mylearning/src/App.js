@@ -193,7 +193,7 @@ function App() {
       routes={routes}
       isShowFooterLink={true}
       appName="Teacher App"
-      skipLogin={true}
+      skipLogin={skipLogin}
       _authComponent={{ swPath: "/modules/worksheet" }}
     />
   );
