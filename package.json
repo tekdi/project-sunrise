@@ -5,8 +5,6 @@
     "packages": [
       "packages/common-lib",
       "packages/core",
-      "packages/studentprogram",
-      "packages/reports",
       "packages/mylearning"
     ]
   },
