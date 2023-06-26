@@ -23,6 +23,7 @@ import VirtualSchool from "pages/VirtualSchool";
 import StoryBot from "pages/StoryBot";
 import ChatPage from "pages/ChatPage";
 import Microphone from "pages/VoiceBot";
+import SchemeBot from "pages/SchemeBot";
 
 const StudentprogramLessonList = React.lazy(() =>
   import("studentprogram/Lessons")
@@ -113,9 +114,14 @@ function App() {
     },
 
     {
-      moduleName: "storybot",
+      moduleName: "mylearning",
       path: "/storybot",
       component: StoryBot,
+    },
+    {
+      moduleName: "mylearning",
+      path: "/schemebot",
+      component: SchemeBot,
     },
 
     {
