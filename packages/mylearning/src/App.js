@@ -24,6 +24,7 @@ import StoryBot from "pages/StoryBot";
 import ChatPage from "pages/ChatPage";
 import Microphone from "pages/VoiceBot";
 import SchemeBot from "pages/SchemeBot";
+import SchemeLang from "pages/SchemeLang";
 
 const StudentprogramLessonList = React.lazy(() =>
   import("studentprogram/Lessons")
@@ -120,7 +121,12 @@ function App() {
     },
     {
       moduleName: "mylearning",
-      path: "/schemebot",
+      path: "/schemeLang",
+      component: SchemeLang,
+    },
+    {
+      moduleName: "mylearning",
+      path: "/schemeLang/schemebot/:name/:selectedOption/:ageOption",
       component: SchemeBot,
     },
 
