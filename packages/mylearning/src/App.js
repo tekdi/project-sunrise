@@ -126,7 +126,7 @@ function App() {
     },
     {
       moduleName: "mylearning",
-      path: "/schemeLang/schemebot/:name/:selectedOption/:ageOption",
+      path: "/schemeLang/schemebot/:name/:selectedOption",
       component: SchemeBot,
     },
 
