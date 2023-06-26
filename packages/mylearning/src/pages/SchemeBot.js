@@ -39,10 +39,10 @@ const SchemeBot = () => {
   }, [searchText]);
 
   if (selectedOption === "en") {
-    welcomeMessage = `Welcome to the ScholarshipBot.
-      Please allow up to 15 seconds for response.  
+    welcomeMessage = `
+      Please allow up to 15 seconds to get response.  
       
-      For eg : “I am the parent of a child studying in 10th grade. Our annual family income is 3lacs. Please help me with the schemes that apply”`;
+      While asking your query, please include information like grade of child, income range etc in your question. For eg : “I am the parent of a child studying in 10th grade. Our annual family income is 3lacs. Please help me with the schemes that apply”`;
   } else if (selectedOption === "hi") {
     welcomeMessage =
       'आइए मिलकर एक कहानी बनाएं। कहानी का पहला वाक्य देकर प्रारंभ करें। उदाहरण के लिए: "एक बार सिम्बा नाम का एक शेर था"';
@@ -138,8 +138,9 @@ const SchemeBot = () => {
             <h1 className={styles.heading}>Hi, I am Scholarship Bot.</h1>
           </div>
           <div className={styles.outerWelcome}>
-            <div className={styles.welcomeMessage}>Welcome, {name} ! </div>
-            <div className={styles.welcomeMessage}>you are {age}</div>{" "}
+            <div className={styles.welcomeMessage}>
+              Welcome to the ScholarshipBot, {name} !{" "}
+            </div>
             {showWelcomeMessage && (
               <div className={styles.welcomePara}>
                 <p>{welcomeMessage}</p>

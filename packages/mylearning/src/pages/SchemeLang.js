@@ -17,20 +17,8 @@ const SchemeLang = () => {
     { value: "te", label: "Telugu" },
   ];
 
-  const ageOptions = [
-    { value: "18", label: "18" },
-    { value: "19", label: "19" },
-    { value: "20", label: "20" },
-    // Add more age options as needed
-  ];
-
   const [selectedOption, setSelectedOption] = useState("");
   const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-
-  const handleAgeChange = (e) => {
-    setAge(e.target.value);
-  };
 
   const handleChange = (e) => {
     setSelectedOption(e.target.value);
@@ -44,7 +32,7 @@ const SchemeLang = () => {
     // Check if the name is not empty
     if (name.trim() !== "") {
       // Navigate to another page using navigate()
-      navigate(`/schemeLang/schemebot/${name}/${selectedOption}/${age}`);
+      navigate(`/schemeLang/schemebot/${name}/${selectedOption}`);
     }
   };
 
@@ -69,18 +57,7 @@ const SchemeLang = () => {
             value={name}
             onChange={handleNameChange}
           />
-          <select
-            value={age}
-            onChange={handleAgeChange}
-            className={styles.dropdown}
-          >
-            <option value="">Select your Age</option>
-            {ageOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>{" "}
+
           <div>
             <select
               value={selectedOption}
@@ -101,7 +78,7 @@ const SchemeLang = () => {
                 onClick={handleButtonClick}
                 disabled={isButtonDisabled}
               >
-                Start Storytelling!
+                Start
               </button>{" "}
             </div>
           </div>
