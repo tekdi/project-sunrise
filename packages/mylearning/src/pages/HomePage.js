@@ -51,7 +51,7 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
     navigate("/voicebot");
   };
   const schemebot = () => {
-    navigate("/schemebot");
+    navigate("/schemeLang");
   };
 
   return (
