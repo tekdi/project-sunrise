@@ -136,17 +136,17 @@ const Microphone = () => {
   ];
 
   const handleLanguageChange = (selectedOption) => {
-    setSelectedLanguage(selectedOption.value);
+    localStorage.setItem("selectedLanguage", selectedOption.value);
     console.log("Selected Language:", selectedOption.value);
   };
 
   const handleAgeChange = (selectedOption) => {
-    setSelectedAge(selectedOption.value);
+    localStorage.setItem("selectedAge", selectedOption.value);
     console.log("Selected Age:", selectedOption.value);
   };
 
   const handleTopicChange = (selectedOption) => {
-    setSelectedTopic(selectedOption.value);
+    localStorage.setItem("selectedTopic", selectedOption.value);
     console.log("Selected Topic:", selectedOption.value);
   };
 
@@ -183,12 +183,16 @@ const Microphone = () => {
       console.log("STORY BOT INPUT");
       console.log(currentTranscript);
 
+      var language = localStorage.getItem("selectedLanguage");
+      var age = localStorage.getItem("selectedAge");
+      var topic = localStorage.getItem("selectedTopic");
+
       const payload = {
         input: currentTranscript,
-        input_lang: selectedLanguage,
-        output_lang: selectedLanguage,
-        age: selectedAge,
-        theme: selectedTopic,
+        input_lang: language,
+        output_lang: language,
+        age: age,
+        theme: topic,
       };
 
       const headers = {
@@ -262,8 +266,8 @@ const Microphone = () => {
           {/* {isPaused ? "Resume" : "Play"} */}
           <img
             src={imagePath3}
-            width={40}
-            height={40}
+            width={30}
+            height={30}
             style={{ border: "none" }}
           />
         </button>{" "}
@@ -271,8 +275,8 @@ const Microphone = () => {
           {/* Pause */}
           <img
             src={imagePath4}
-            width={40}
-            height={40}
+            width={30}
+            height={30}
             style={{ border: "none" }}
           />
         </button>{" "}
@@ -280,8 +284,8 @@ const Microphone = () => {
           {/* Stop */}
           <img
             src={imagePath5}
-            width={40}
-            height={40}
+            width={30}
+            height={30}
             style={{ border: "none" }}
           />
         </button>

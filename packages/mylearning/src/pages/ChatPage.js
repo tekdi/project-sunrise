@@ -20,6 +20,11 @@ const ChatPage = () => {
   //hitesh
 
   useEffect(() => {
+    const chatContainer = document.getElementById("chatContainer");
+    chatContainer.scrollTo({ top: chatContainer.scrollHeight, left: 0 });
+  }, [isLoading]);
+
+  useEffect(() => {
     window.scrollTo({ top: 1200, left: 0, behavior: "auto" });
   }, [isLoading]);
 
@@ -153,7 +158,11 @@ const ChatPage = () => {
               </div>
             )}{" "}
           </div>
-          <div className={styles.chatContainer}>
+          <div
+            className={styles.chatContainer}
+            id="chatContainer"
+            style={{ overflowY: "scroll", marginBottom: "60px" }}
+          >
             <div className={styles.messageThread}>
               {messages.map((message, index) => (
                 <div
@@ -171,7 +180,7 @@ const ChatPage = () => {
                 </div>
               ))}
               {/* hitesh */}
-              <div style={{ color: "whitesmoke", marginLeft: "20px" }}>
+              <div style={{ color: "black", marginLeft: "20px" }}>
                 {" "}
                 {isLoading ? "loading" : null}
               </div>
@@ -199,8 +208,8 @@ const ChatPage = () => {
             >
               <img
                 src={imagePath2}
-                width={30}
-                height={30}
+                width={20}
+                height={20}
                 style={{ border: "none" }}
               />
             </button>

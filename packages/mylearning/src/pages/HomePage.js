@@ -50,6 +50,9 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
   const storyvoicebot = () => {
     navigate("/voicebot");
   };
+  const schemebot = () => {
+    navigate("/schemebot");
+  };
 
   return (
     <Layout
@@ -69,6 +72,9 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
             </button>
             <button onClick={storybot} className={styles.button}>
               AI Story Bot
+            </button>
+            <button onClick={schemebot} className={styles.button}>
+              Scheme Bot
             </button>
             <button onClick={storyvoicebot} className={styles.button}>
               AI Voice Bot

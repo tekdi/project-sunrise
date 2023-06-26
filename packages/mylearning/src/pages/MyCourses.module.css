@@ -22,6 +22,9 @@
 }
 
 .donebutton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
   background-color: #f87558;
   color: white;

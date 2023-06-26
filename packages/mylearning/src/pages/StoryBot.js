@@ -75,9 +75,10 @@ const StoryBot = () => {
             in the language of your choice.
           </p>
           <input
+            autofocus="autofocus"
             type="text"
             className={styles.textField}
-            placeholder="Your Name"
+            placeholder="Enter your name"
             value={name}
             onChange={handleNameChange}
           />
