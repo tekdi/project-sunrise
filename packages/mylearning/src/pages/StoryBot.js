@@ -17,13 +17,6 @@ const StoryBot = () => {
     { value: "te", label: "Telugu" },
   ];
 
-  const ageOptions = [
-    { value: "18", label: "18" },
-    { value: "19", label: "19" },
-    { value: "20", label: "20" },
-    // Add more age options as needed
-  ];
-
   const topicOptions = [
     { value: "adventure", label: "Adventure" },
     { value: "jungle", label: "Jungle" },
@@ -82,19 +75,14 @@ const StoryBot = () => {
             value={name}
             onChange={handleNameChange}
           />
-          <select
+          <input
+            type="number"
             value={age}
             onChange={handleAgeChange}
             className={styles.dropdown}
-          >
-            <option value="">Select your Age</option>
-            {ageOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>{" "}
-          <select
+            placeholder="Enter your Age"
+          />
+          {/* <select
             value={selectedTopic}
             onChange={handleTopicChange}
             className={styles.dropdown}
@@ -105,7 +93,14 @@ const StoryBot = () => {
                 {option.label}
               </option>
             ))}
-          </select>{" "}
+          </select>{" "} */}
+          <input
+            type="text"
+            value={selectedTopic}
+            onChange={handleTopicChange}
+            className={styles.dropdown}
+            placeholder="Enter a Topic"
+          />
           <div>
             <select
               value={selectedOption}

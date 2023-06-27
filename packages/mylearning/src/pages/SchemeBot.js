@@ -111,10 +111,33 @@ const SchemeBot = () => {
           }
         );
         const botResponse = response.data.answer;
-        console.log(response.data.answer);
+
+        const pointsArray = botResponse.split(", ");
+        const formattedResponse = pointsArray
+          .map((point) => point.trim())
+          .join("<br><br>");
+
+        // The code first splits the botResponse string into an array called pointsArray using the .split(", ") method.
+        // This splits the string at each occurrence of ", " and stores the individual points as separate elements in the array.
+        // Then, the map() method is used on pointsArray to iterate over each element (point) and
+        // apply the trim() method to remove any leading or trailing whitespace.
+
+        //This ensures that each point is properly formatted without any extra spaces.
+
+        // Finally, the join("<br><br>") method is used to join the formatted points from the pointsArray into a single string,
+        // where each point is separated by <br><br>.
+        // This creates line breaks between each point, visually formatting them as separate paragraphs or sections.
+
+        // The resulting formattedResponse string will contain the formatted points with line breaks between them,
+        //suitable for rendering in an HTML environment.
+
+        const cleanedResponse = formattedResponse.replace(/<br><br>$/g, ""); // Remove trailing line breaks
+
+        console.log(cleanedResponse);
+
         setMessages((prevMessages) => [
           ...prevMessages,
-          { text: botResponse, isUser: false },
+          { text: cleanedResponse, isUser: false },
         ]);
         //hitesh
         setIsLoading(false);
@@ -165,8 +188,19 @@ const SchemeBot = () => {
                   <div
                     className={message.isUser ? styles.userBox : styles.botBox}
                   >
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: message.text
+                          .replace(
+                            /(https:\/\/\S+)/g,
+                            "<a href='$1' target='_blank'>$1</a>"
+                          )
+                          .replace(/\n\n/g, "<br><br>")
+                          .replace(/\n/g, "<br>"),
+                      }}
+                    ></span>
                     {/* hitesh */}
-                    {message.isUser ? message.text : message.text}
+                    {/* {message.isUser ? message.text : message.text} */}
                   </div>
                 </div>
               ))}

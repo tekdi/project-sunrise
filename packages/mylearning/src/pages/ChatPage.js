@@ -151,7 +151,9 @@ const ChatPage = () => {
           </div>
           <div className={styles.outerWelcome}>
             <div className={styles.welcomeMessage}>Welcome, {name} ! </div>
-            <div className={styles.welcomeMessage}>you are {age}</div>{" "}
+            <div className={styles.welcomeMessage}>
+              you are {ageOption} and selected Topic is : {topicOption}
+            </div>{" "}
             {showWelcomeMessage && (
               <div className={styles.welcomePara}>
                 <p>{welcomeMessage}</p>
