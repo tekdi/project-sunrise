@@ -74,7 +74,7 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
               AI Story Bot
             </button>
             <button onClick={schemebot} className={styles.button}>
-              Scheme Bot
+              ScholarshipKHOJ
             </button>
             <button onClick={storyvoicebot} className={styles.button}>
               AI Voice Bot
