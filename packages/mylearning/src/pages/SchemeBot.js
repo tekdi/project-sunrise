@@ -100,6 +100,8 @@ const SchemeBot = () => {
         ]);
         const response = await axios.get(
           "https://fpnbot.freepokernetwork.com/node/multilang",
+          // "http://localhost:3000/multilang",
+
           {
             params: {
               query_string: searchText,
@@ -135,11 +137,11 @@ const SchemeBot = () => {
       <div className={styles.container}>
         <div className={styles.mobileScreen}>
           <div className={styles.title}>
-            <h1 className={styles.heading}>Hi, I am Scholarship Bot.</h1>
+            <h1 className={styles.heading}>Hi, I am ScholarshipKHOJ.</h1>
           </div>
           <div className={styles.outerWelcome}>
             <div className={styles.welcomeMessage}>
-              Welcome to the ScholarshipBot, {name} !{" "}
+              Welcome to the ScholarshipKHOJ, {name} !{" "}
             </div>
             {showWelcomeMessage && (
               <div className={styles.welcomePara}>
