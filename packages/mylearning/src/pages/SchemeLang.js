@@ -44,6 +44,7 @@ const SchemeLang = () => {
         <div className={styles.title}>
           <h1 className={styles.heading}>Scheme Bot</h1>
         </div>
+
         <div className={styles.content}>
           <p className={styles.para}>
             Welcome to the Story Bot. This bot will co-create stories with you

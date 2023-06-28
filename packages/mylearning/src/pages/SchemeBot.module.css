@@ -136,8 +136,7 @@
   margin-bottom: 8px;
   margin-left: auto; /* Updated property */
   margin-right: 15px;
-  align-items: flex-end;
-  justify-content: flex-end;
+
   width: fit-content;
 }
 .botMessage {
@@ -150,7 +149,7 @@
   margin-bottom: 8px;
   margin-right: 50px;
   margin-left: 15px;
-  width: auto;
+  width: fit-content;
 }
 
 .outerWelcome {
@@ -174,4 +173,35 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+button {
+  border: none;
+  border-radius: 5px;
+  transition: background-color 2s;
+  background-position: center;
+  padding: 5px;
+  height: 46px;
+}
+
+/* ripple effect */
+
+.ripple {
+  animation-duration: 1.5s;
+  animation-name: ripples;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  transform-origin: center;
+  background-color: #f87558;
+}
+
+@keyframes ripples {
+  from {
+    background-color: #f87558;
+  }
+
+  to {
+    opacity: 0.9;
+    filter: brightness(1.5);
+  }
 }
