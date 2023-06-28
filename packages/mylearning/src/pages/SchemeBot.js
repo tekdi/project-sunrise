@@ -5,6 +5,11 @@ import { useParams } from "react-router-dom";
 const imagePath2 = require("../assets/send.png");
 
 const SchemeBot = () => {
+  const imagePath3 = require("../assets/mic.png");
+  const [buttonClass, setButtonClass] = useState(false);
+  const [recording, setRecording] = useState(false);
+  const [transcript, setTranscript] = useState(null);
+  const recognitionRef = useRef(null);
   const { name, selectedOption, ageOption } = useParams();
   const [searchText, setSearchText] = useState("");
   const [messages, setMessages] = useState([]);
@@ -17,6 +22,34 @@ const SchemeBot = () => {
   let age = "";
 
   //hitesh
+
+  useEffect(() => {
+    recognitionRef.current = new window.webkitSpeechRecognition();
+    recognitionRef.current.continuous = true;
+    recognitionRef.current.interimResults = true;
+
+    recognitionRef.current.onresult = async (event) => {
+      let currentTranscript = "";
+      for (let i = 0; i < event.results.length; i++) {
+        currentTranscript += event.results[i][0].transcript + " ";
+      }
+      currentTranscript = currentTranscript.trim();
+      console.log("Transcript:", currentTranscript);
+      setTranscript(currentTranscript);
+    };
+
+    recognitionRef.current.onerror = (event) => {
+      console.error("Speech recognition error:", event.error);
+      setRecording(false);
+    };
+
+    recognitionRef.current.onend = () => {
+      if (recording) {
+        setRecording(false);
+        sendAudioToAIForBharat();
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const chatContainer = document.getElementById("chatContainer");
@@ -37,6 +70,21 @@ const SchemeBot = () => {
       textareaRef.current.scrollTop = maxScrollHeight - visibleHeight;
     }
   }, [searchText]);
+
+  const handleClick = () => {
+    if (!recording) {
+      recognitionRef.current.start();
+      setRecording(true);
+    } else {
+      recognitionRef.current.stop();
+      setRecording(false);
+      if (transcript) {
+        setSearchText(transcript.trim());
+        setTranscript(null);
+        handleSearch({ type: "click" }); // Trigger handleSearch manually with click event
+      }
+    }
+  };
 
   if (selectedOption === "en") {
     welcomeMessage = `
@@ -86,17 +134,22 @@ const SchemeBot = () => {
   const handleSearch = async (event) => {
     //hitesh
     if (event.keyCode === 13 || event.type === "click") {
-      if (searchText.trim() === "") {
-        return; // If the search text is empty or contains only whitespace, do not proceed
+      let textToSearch = searchText.trim();
+      if (transcript) {
+        // Use transcript as search text if available
+        textToSearch = transcript.trim();
+        setTranscript(null); // Reset transcript after using it
       }
-
+      if (textToSearch === "") {
+        return;
+      }
       try {
         //hitesh
         setIsLoading(true);
         setSearchText("");
         setMessages((prevMessages) => [
           ...prevMessages,
-          { text: searchText, isUser: true },
+          { text: textToSearch, isUser: true },
         ]);
         const response = await axios.get(
           "https://fpnbot.freepokernetwork.com/node/multilang",
@@ -112,7 +165,7 @@ const SchemeBot = () => {
         );
         const botResponse = response.data.answer;
 
-        const pointsArray = botResponse.split(", ");
+        const pointsArray = botResponse.split(", " && ": ");
         const formattedResponse = pointsArray
           .map((point) => point.trim())
           .join("<br><br>");
@@ -237,6 +290,22 @@ const SchemeBot = () => {
                 height={20}
                 style={{ border: "none" }}
               />
+            </button>
+            <button
+              className={buttonClass ? styles.ripple : null}
+              onClick={() => {
+                setButtonClass(!buttonClass);
+                handleClick();
+              }}
+            >
+              {" "}
+              <img
+                src={imagePath3}
+                width={20}
+                height={20}
+                style={{ border: "none" }}
+              />
+              {recording ? "Stop" : "Click"}
             </button>
           </div>
         </div>
