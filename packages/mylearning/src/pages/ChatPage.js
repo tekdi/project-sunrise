@@ -97,10 +97,10 @@ const ChatPage = () => {
       }
       const payload = {
         input: searchText,
-        input_lang: "en",
-        output_lang: "en",
-        age: age,
-        theme: topic,
+        input_lang: selectedOption,
+        output_lang: selectedOption,
+        age: ageOption,
+        theme: topicOption,
       };
       const headers = {
         // Add your desired headers here

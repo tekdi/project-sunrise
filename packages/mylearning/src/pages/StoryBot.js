@@ -9,10 +9,10 @@ const StoryBot = () => {
     { value: "en", label: "English" },
     { value: "hi", label: "Hindi" },
     { value: "gu", label: "Gujarati" },
-    { value: "ma", label: "Marathi" },
+    { value: "mr", label: "Marathi" },
     { value: "pu", label: "Punjabi" },
     { value: "ta", label: "Tamil" },
-    { value: "mal", label: "Malyalam" },
+    { value: "ml", label: "Malyalam" },
     { value: "Ka", label: "Kannada" },
     { value: "te", label: "Telugu" },
   ];
