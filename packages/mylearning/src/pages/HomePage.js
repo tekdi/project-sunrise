@@ -55,57 +55,60 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
   };
 
   return (
-    <Layout
-      _header={{
-        title: t("PROJECT SUNRISE APPS"),
-      }}
-    >
-      <VStack>
-        <div>
-          <div className={styles.bdiv}>
-            {" "}
-            <button onClick={qrscanner} className={styles.button}>
-              QR based AI Tool
-            </button>
-            <button onClick={virtualschool} className={styles.button}>
-              Virtual School
-            </button>
-            <button onClick={storybot} className={styles.button}>
-              AI Story Bot
-            </button>
-            <button onClick={schemebot} className={styles.button}>
-              ScholarshipKHOJ
-            </button>
-            <button onClick={storyvoicebot} className={styles.button}>
-              AI Voice Bot
-            </button>
-            <button onClick={jugalbandi} className={styles.button}>
-              <span> Textbook Mate</span>
-              <LaunchIcon />
-            </button>
-            <button onClick={voice} className={styles.button}>
-              Voice Search
-            </button>
-            <button className={styles.button} onClick={mainPage}>
-              Browse and Search
-            </button>{" "}
-            <button onClick={preference} className={styles.button}>
-              Courses by Preference
-            </button>
-            <button onClick={teacherapp} className={styles.button}>
-              <span> Shiksha Teacher App</span>
-              <LaunchIcon />
-            </button>
-            <button onClick={adaptivelearning} className={styles.button}>
-              <span> ALT Adaptive Learning</span>
-              <LaunchIcon />
-            </button>
-            <button onClick={toc} className={styles.button}>
-              Course TOC
-            </button>
-          </div>
+    <VStack>
+      <h2
+        style={{
+          display: "flex",
+          color: "#444444",
+          justifyContent: "center",
+        }}
+      >
+        Welcome to Project Sunrise
+      </h2>
+      <div>
+        <div className={styles.bdiv}>
+          {" "}
+          <button onClick={qrscanner} className={styles.button}>
+            QR based AI Tool
+          </button>
+          <button onClick={virtualschool} className={styles.button}>
+            Virtual School
+          </button>
+          <button onClick={storybot} className={styles.button}>
+            AI Story Bot
+          </button>
+          <button onClick={schemebot} className={styles.button}>
+            ScholarshipKHOJ
+          </button>
+          <button onClick={storyvoicebot} className={styles.button}>
+            AI Voice Bot
+          </button>
+          <button onClick={jugalbandi} className={styles.button}>
+            <span> Textbook Mate</span>
+            <LaunchIcon />
+          </button>
+          <button onClick={voice} className={styles.button}>
+            Voice Search
+          </button>
+          <button className={styles.button} onClick={mainPage}>
+            Browse and Search
+          </button>{" "}
+          <button onClick={preference} className={styles.button}>
+            Courses by Preference
+          </button>
+          <button onClick={teacherapp} className={styles.button}>
+            <span> Shiksha Teacher App</span>
+            <LaunchIcon />
+          </button>
+          <button onClick={adaptivelearning} className={styles.button}>
+            <span> ALT Adaptive Learning</span>
+            <LaunchIcon />
+          </button>
+          <button onClick={toc} className={styles.button}>
+            Course TOC
+          </button>
         </div>
-      </VStack>
-    </Layout>
+      </div>
+    </VStack>
   );
 }

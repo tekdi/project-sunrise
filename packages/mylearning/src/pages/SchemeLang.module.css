@@ -20,7 +20,7 @@
 .heading {
   font-size: 24px;
   font-weight: bold;
-  color: #333333;
+  color: whitesmoke;
 }
 .title {
   background-color: #f87558;
@@ -29,7 +29,7 @@
   top: 0;
   align-items: center;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 .para {
   font-size: medium;
@@ -176,7 +176,4 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.breadcrumb {
 }

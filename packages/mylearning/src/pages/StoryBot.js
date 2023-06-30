@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./StoryBot.module.css";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const StoryBot = () => {
   const navigate = useNavigate(); // React Router's navigate function for navigation
@@ -54,12 +55,22 @@ const StoryBot = () => {
     }
   };
 
+  const handleBackButton = () => {
+    navigate(-1);
+  };
+
   const isButtonDisabled = name.trim() === "";
 
   return (
     <div className={styles.container}>
       <div className={styles.mobileScreen}>
         <div className={styles.title}>
+          <button
+            style={{ backgroundColor: "transparent", marginTop: "5px" }}
+            onClick={handleBackButton}
+          >
+            <ArrowBackIcon style={{ color: "white" }} />
+          </button>
           <h1 className={styles.heading}>Story Bot</h1>
         </div>
         <div className={styles.content}>

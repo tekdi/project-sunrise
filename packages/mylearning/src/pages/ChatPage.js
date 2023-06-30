@@ -3,6 +3,8 @@ import axios from "axios";
 import styles from "./StoryBot.module.css";
 import { useParams } from "react-router-dom";
 const imagePath2 = require("../assets/send.png");
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
 
 const ChatPage = () => {
   const { name, selectedOption, ageOption, topicOption } = useParams();
@@ -12,10 +14,13 @@ const ChatPage = () => {
   //hitesh
   const [isLoading, setIsLoading] = useState(false);
   const textareaRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleBackButton = () => {
+    navigate(-1);
+  };
 
   let welcomeMessage = "";
-  let age = "";
-  let topic = "";
 
   //hitesh
 
@@ -71,24 +76,7 @@ const ChatPage = () => {
   } else {
     welcomeMessage = "Welcome";
   } // condition for age
-  if (ageOption === "18") {
-    age = "18";
-  } else if (ageOption === "19") {
-    age = "19";
-  } else if (ageOption === "20") {
-    age = "20";
-  } else {
-    age = "age";
-  } // condition for topic
-  if (topicOption === "adventure") {
-    topic = "adventure";
-  } else if (topicOption === "jungle") {
-    topic = "jungle";
-  } else if (topicOption === "animal") {
-    topic = "animal";
-  } else {
-    topic = "topic";
-  }
+
   const handleSearch = async (event) => {
     //hitesh
     if (event.keyCode === 13 || event.type === "click") {
@@ -147,6 +135,12 @@ const ChatPage = () => {
       <div className={styles.container}>
         <div className={styles.mobileScreen}>
           <div className={styles.title}>
+            <button
+              style={{ backgroundColor: "transparent", marginTop: "5px" }}
+              onClick={handleBackButton}
+            >
+              <ArrowBackIcon style={{ color: "white" }} />
+            </button>
             <h1 className={styles.heading}>Story Bot</h1>
           </div>
           <div className={styles.outerWelcome}>

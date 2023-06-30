@@ -5,6 +5,7 @@ import Layout from "@shiksha/common-lib";
 import { AppBar } from "@shiksha/common-lib";
 import { Button } from "stories/Button";
 import LaunchIcon from "@mui/icons-material/Launch";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function Aisearch() {
   const imagePath = require("../assets/images/pastedimage0.png");
@@ -18,10 +19,19 @@ function Aisearch() {
     navigate("/teacherqr");
   };
 
+  const handleBackButton = () => {
+    navigate("/");
+  };
+
   return (
     <React.Fragment>
-      <AppBar />
       <div className={styles.headingQR}>
+        <button
+          style={{ backgroundColor: "transparent", marginTop: "5px" }}
+          onClick={handleBackButton}
+        >
+          <ArrowBackIcon style={{ color: "white" }} />
+        </button>
         <h2 style={{ color: "white" }}>QR Enabled AI Learning Tool</h2>
       </div>
       <div>
