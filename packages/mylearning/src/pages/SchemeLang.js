@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./SchemeLang.module.css";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const SchemeLang = () => {
   const navigate = useNavigate(); // React Router's navigate function for navigation
@@ -35,6 +36,9 @@ const SchemeLang = () => {
       navigate(`/schemeLang/schemebot/${name}/${selectedOption}`);
     }
   };
+  const handleBackButton = () => {
+    navigate(-1);
+  };
 
   const isButtonDisabled = name.trim() === "";
 
@@ -42,6 +46,12 @@ const SchemeLang = () => {
     <div className={styles.container}>
       <div className={styles.mobileScreen}>
         <div className={styles.title}>
+          <button
+            style={{ backgroundColor: "transparent", marginTop: "5px" }}
+            onClick={handleBackButton}
+          >
+            <ArrowBackIcon style={{ color: "white" }} />
+          </button>
           <h1 className={styles.heading}>Scheme Bot</h1>
         </div>
 

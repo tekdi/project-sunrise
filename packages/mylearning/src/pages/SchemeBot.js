@@ -3,6 +3,8 @@ import axios from "axios";
 import styles from "./SchemeBot.module.css";
 import { useParams } from "react-router-dom";
 const imagePath2 = require("../assets/send.png");
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
 
 const SchemeBot = () => {
   const imagePath3 = require("../assets/mic.png");
@@ -17,6 +19,7 @@ const SchemeBot = () => {
   //hitesh
   const [isLoading, setIsLoading] = useState(false);
   const textareaRef = useRef(null);
+  const navigate = useNavigate();
 
   let welcomeMessage = "";
   let age = "";
@@ -71,6 +74,10 @@ const SchemeBot = () => {
     }
   }, [searchText]);
 
+  const handleBackButton = () => {
+    navigate(-1);
+  };
+
   const handleClick = () => {
     if (!recording) {
       recognitionRef.current.start();
@@ -90,34 +97,47 @@ const SchemeBot = () => {
     welcomeMessage = `
       Please allow up to 15 seconds to get response.  
       
-      While asking your query, please include information like grade of child, income range etc in your question. For eg : “I am the parent of a child studying in 10th grade. Our annual family income is 3lacs. Please help me with the schemes that apply”`;
+      While asking your query, please include information like grade of child, income range etc in your question. For eg : “I am the parent of a child studying in 10th grade. Our annual family income is 3lacs. Please help me with the schemes that apply?”`;
   } else if (selectedOption === "hi") {
-    welcomeMessage =
-      'आइए मिलकर एक कहानी बनाएं। कहानी का पहला वाक्य देकर प्रारंभ करें। उदाहरण के लिए: "एक बार सिम्बा नाम का एक शेर था"';
+    welcomeMessage = `
+      कृपया प्रतिक्रिया पाने के लिए 15 सेकंड तक का समय दें।
+      
+    अपना प्रश्न पूछते समय, कृपया अपने प्रश्न में बच्चे का ग्रेड, आय सीमा आदि जैसी जानकारी शामिल करें। उदाहरण के लिए: “मैं 10वीं कक्षा में पढ़ने वाले एक बच्चे का माता-पिता हूं। हमारी वार्षिक पारिवारिक आय 3 लाख है। कृपया लागू होने वाली योजनाओं में मेरी मदद करें?"`;
   } else if (selectedOption === "gu") {
-    welcomeMessage =
-      'ચાલો સાથે મળીને એક વાર્તા બનાવીએ. વાર્તાનું પ્રથમ વાક્ય આપીને શરૂઆત કરો. ઉદાહરણ તરીકે: "એક સમયે સિમ્બા નામનો સિંહ હતો"';
+    welcomeMessage = `
+      'પ્રતિસાદ મેળવવા માટે કૃપા કરીને 15 સેકન્ડ સુધીનો સમય આપો.
+      
+     તમારી ક્વેરી પૂછતી વખતે, કૃપા કરીને તમારા પ્રશ્નમાં બાળકનો ગ્રેડ, આવક શ્રેણી વગેરે જેવી માહિતી શામેલ કરો. દા.ત.: “હું 10મા ધોરણમાં ભણતા બાળકનો માતાપિતા છું. અમારા કુટુંબની વાર્ષિક આવક 3 લાખ છે. કૃપા કરીને મને લાગુ પડતી યોજનાઓમાં મદદ કરો?"`;
   } else if (selectedOption === "ma") {
-    welcomeMessage =
-      'चला एकत्र एक कथा तयार करूया. कथेचे पहिले वाक्य देऊन सुरुवात करा. उदा: "एकेकाळी सिंबा नावाचा सिंह होता"';
-  } else if (selectedOption === "ma") {
-    welcomeMessage =
-      'चला एकत्र एक कथा तयार करूया. कथेचे पहिले वाक्य देऊन सुरुवात करा. उदा: "एकेकाळी सिंबा नावाचा सिंह होता"';
+    welcomeMessage = `
+      'कृपया प्रतिसाद मिळविण्यासाठी 15 सेकंदांपर्यंत वेळ द्या.
+      
+      तुमचा प्रश्न विचारत असताना, कृपया तुमच्या प्रश्नात मुलाचा दर्जा, उत्पन्न श्रेणी इत्यादी माहिती समाविष्ट करा. उदा: “मी 10 व्या वर्गात शिकत असलेल्या मुलाचा पालक आहे. आमचे वार्षिक कौटुंबिक उत्पन्न 3 लाख आहे. कृपया मला लागू होणाऱ्या योजनांसाठी मदत करा?`;
   } else if (selectedOption === "pu") {
-    welcomeMessage =
-      'ਆਓ ਮਿਲ ਕੇ ਇੱਕ ਕਹਾਣੀ ਬਣਾਈਏ। ਕਹਾਣੀ ਦਾ ਪਹਿਲਾ ਵਾਕ ਦੇ ਕੇ ਸ਼ੁਰੂ ਕਰੋ। ਉਦਾਹਰਨ: "ਇੱਕ ਵਾਰ ਸਿੰਬਾ ਨਾਮ ਦਾ ਇੱਕ ਸ਼ੇਰ ਸੀ"';
+    welcomeMessage = `
+    ਕਿਰਪਾ ਕਰਕੇ ਜਵਾਬ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ 15 ਸਕਿੰਟਾਂ ਤੱਕ ਦਾ ਸਮਾਂ ਦਿਓ।
+      
+    ਆਪਣੀ ਪੁੱਛਗਿੱਛ ਪੁੱਛਣ ਵੇਲੇ, ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਸਵਾਲ ਵਿੱਚ ਬੱਚੇ ਦਾ ਗ੍ਰੇਡ, ਆਮਦਨੀ ਸੀਮਾ ਆਦਿ ਵਰਗੀ ਜਾਣਕਾਰੀ ਸ਼ਾਮਲ ਕਰੋ। ਉਦਾਹਰਨ ਲਈ: “ਮੈਂ 10ਵੀਂ ਜਮਾਤ ਵਿੱਚ ਪੜ੍ਹ ਰਹੇ ਬੱਚੇ ਦਾ ਮਾਤਾ-ਪਿਤਾ ਹਾਂ। ਸਾਡੀ ਸਾਲਾਨਾ ਪਰਿਵਾਰਕ ਆਮਦਨ 3 ਲੱਖ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਲਾਗੂ ਹੋਣ ਵਾਲੀਆਂ ਸਕੀਮਾਂ ਵਿੱਚ ਮੇਰੀ ਮਦਦ ਕਰੋ?`;
   } else if (selectedOption === "ta") {
-    welcomeMessage =
-      'ஒன்றாக ஒரு கதையை உருவாக்குவோம். கதையின் முதல் வாக்கியத்தைக் கொடுத்து ஆரம்பிக்கவும். உதாரணம்: "ஒரு காலத்தில் சிம்பா என்ற சிங்கம் இருந்தது."';
+    welcomeMessage = `
+      'பதிலைப் பெற 15 வினாடிகள் வரை அனுமதிக்கவும்.
+      
+      உங்கள் கேள்வியைக் கேட்கும் போது, ​​உங்கள் கேள்வியில் குழந்தையின் தரம், வருமான வரம்பு போன்ற தகவல்களைச் சேர்க்கவும். உதாரணமாக: “நான் 10 ஆம் வகுப்பு படிக்கும் ஒரு குழந்தையின் பெற்றோர். எங்கள் குடும்ப ஆண்டு வருமானம் 3 லட்சம். பொருந்தும் திட்டங்களில் எனக்கு உதவவும்?`;
   } else if (selectedOption === "mal") {
-    welcomeMessage =
-      'നമുക്ക് ഒരുമിച്ച് ഒരു കഥ സൃഷ്ടിക്കാം. കഥയുടെ ആദ്യ വാചകം പറഞ്ഞുകൊണ്ട് ആരംഭിക്കുക. ഉദാഹരണം: "ഒരിക്കൽ സിംബ എന്നൊരു സിംഹമുണ്ടായിരുന്നു."';
+    welcomeMessage = `
+    പ്രതികരണം ലഭിക്കാൻ ദയവായി 15 സെക്കൻഡ് വരെ അനുവദിക്കുക.
+      
+    നിങ്ങളുടെ ചോദ്യം ചോദിക്കുമ്പോൾ, കുട്ടിയുടെ ഗ്രേഡ്, വരുമാന പരിധി തുടങ്ങിയ വിവരങ്ങൾ നിങ്ങളുടെ ചോദ്യത്തിൽ ഉൾപ്പെടുത്തുക. ഉദാഹരണത്തിന്: "ഞാൻ പത്താം ക്ലാസ്സിൽ പഠിക്കുന്ന ഒരു കുട്ടിയുടെ രക്ഷിതാവാണ്. ഞങ്ങളുടെ കുടുംബ വാർഷിക വരുമാനം 3 ലക്ഷം. ബാധകമായ സ്കീമുകളിൽ ദയവായി എന്നെ സഹായിക്കണോ?`;
   } else if (selectedOption === "ka") {
-    welcomeMessage =
-      'ಒಟ್ಟಿಗೆ ಕಥೆಯನ್ನು ರಚಿಸೋಣ. ಕಥೆಯ ಮೊದಲ ವಾಕ್ಯವನ್ನು ಹೇಳುವ ಮೂಲಕ ಪ್ರಾರಂಭಿಸಿ. ಉದಾಹರಣೆ: "ಒಂದು ಕಾಲದಲ್ಲಿ ಸಿಂಬಾ ಎಂಬ ಸಿಂಹ ಇತ್ತು."';
+    welcomeMessage = `
+    ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಪಡೆಯಲು ದಯವಿಟ್ಟು 15 ಸೆಕೆಂಡುಗಳವರೆಗೆ ಅನುಮತಿಸಿ.
+      
+    ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕೇಳುವಾಗ, ದಯವಿಟ್ಟು ನಿಮ್ಮ ಪ್ರಶ್ನೆಯಲ್ಲಿ ಮಗುವಿನ ಗ್ರೇಡ್, ಆದಾಯ ಶ್ರೇಣಿ ಇತ್ಯಾದಿ ಮಾಹಿತಿಯನ್ನು ಸೇರಿಸಿ. ಉದಾ : “ನಾನು 10ನೇ ತರಗತಿಯಲ್ಲಿ ಓದುತ್ತಿರುವ ಮಗುವಿನ ಪೋಷಕರು. ನಮ್ಮ ಕುಟುಂಬದ ವಾರ್ಷಿಕ ಆದಾಯ 3 ಲಕ್ಷಗಳು. ದಯವಿಟ್ಟು ಅನ್ವಯವಾಗುವ ಯೋಜನೆಗಳೊಂದಿಗೆ ನನಗೆ ಸಹಾಯ ಮಾಡುವುದೇ?`;
   } else if (selectedOption === "te") {
-    welcomeMessage =
-      'ఇద్దరం కలిసి కథను రూపొందిద్దాం. కథలోని మొదటి వాక్యాన్ని చెప్పడం ద్వారా ప్రారంభించండి. ఉదాహరణ: "ఒకప్పుడు సింబా అనే సింహం ఉండేది."';
+    welcomeMessage = `
+    ప్రతిస్పందన పొందడానికి దయచేసి 15 సెకన్ల వరకు అనుమతించండి.
+      
+    మీ ప్రశ్నను అడుగుతున్నప్పుడు, దయచేసి మీ ప్రశ్నలో పిల్లల గ్రేడ్, ఆదాయ పరిధి మొదలైన సమాచారాన్ని చేర్చండి. ఉదా: “నేను 10వ తరగతి చదువుతున్న ఒక బిడ్డకు తల్లితండ్రిని. మా కుటుంబ వార్షిక ఆదాయం 3 లక్షలు. దయచేసి వర్తించే పథకాలతో నాకు సహాయం చేయాలా?'`;
   } else {
     welcomeMessage = "Welcome";
   } // condition for age
@@ -213,6 +233,12 @@ const SchemeBot = () => {
       <div className={styles.container}>
         <div className={styles.mobileScreen}>
           <div className={styles.title}>
+            <button
+              style={{ backgroundColor: "transparent", marginTop: "5px" }}
+              onClick={handleBackButton}
+            >
+              <ArrowBackIcon style={{ color: "white" }} />
+            </button>
             <h1 className={styles.heading}>Hi, I am ScholarshipKHOJ.</h1>
           </div>
           <div className={styles.outerWelcome}>
