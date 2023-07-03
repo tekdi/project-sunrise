@@ -171,19 +171,76 @@ const SchemeBot = () => {
           ...prevMessages,
           { text: textToSearch, isUser: true },
         ]);
-        const response = await axios.get(
-          "https://fpnbot.freepokernetwork.com/node/multilang",
-          // "http://localhost:3000/multilang",
+        let responseData = "";
+        if (selectedOption !== "en") {
+          const firstApiResponse = await axios.post(
+            "https://demo-api.models.ai4bharat.org/inference/translation/v2",
+            {
+              controlConfig: { dataTracking: true },
+              input: [
+                {
+                  source: searchText,
+                },
+              ],
+              config: {
+                serviceId: "",
+                language: {
+                  sourceLanguage: selectedOption,
+                  targetLanguage: "en",
+                  targetScriptCode: null,
+                  sourceScriptCode: null,
+                },
+              },
+            }
+          );
+          responseData = firstApiResponse.data.output[0].target;
+        } else {
+          responseData = searchText;
+        }
 
+        // Second API call to Jugalbandi bot
+        const queryString = `You are a helpful assistant who helps with answering questions based on the provided information. If the information asked cannot be found in the text provided, you admit that I can't find the exact information. Always include application links for each scheme. Here is the question: ${responseData}`;
+        const secondApiResponse = await axios.get(
+          "http://4.240.112.55:8000/query-with-gptindex",
           {
             params: {
-              query_string: searchText,
-              inputLanguage: selectedOption,
-              outputLanguage: selectedOption,
+              uuid_number: "6df74548-140e-11ee-9884-0242ac110002",
+              query_string: queryString,
+            },
+            headers: {
+              accept: "application/json",
             },
           }
         );
-        const botResponse = response.data.answer;
+        const secondResponseData = secondApiResponse.data.answer;
+
+        // Third API call for language conversion (if necessary)
+        let botResponse = "";
+        if (selectedOption !== "en") {
+          const thirdApiResponse = await axios.post(
+            "https://demo-api.models.ai4bharat.org/inference/translation/v2",
+            {
+              controlConfig: { dataTracking: true },
+              input: [
+                {
+                  source: secondResponseData,
+                },
+              ],
+              config: {
+                serviceId: "",
+                language: {
+                  sourceLanguage: "en",
+                  targetLanguage: selectedOption,
+                  targetScriptCode: null,
+                  sourceScriptCode: null,
+                },
+              },
+            }
+          );
+          botResponse = thirdApiResponse.data.output[0].target;
+        } else {
+          botResponse = secondResponseData;
+        }
 
         const pointsArray = botResponse.split(", " && ": ");
         const formattedResponse = pointsArray
