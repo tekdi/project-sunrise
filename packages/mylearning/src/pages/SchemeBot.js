@@ -173,6 +173,7 @@ const SchemeBot = () => {
         ]);
         let responseData = "";
         if (selectedOption !== "en") {
+          console.log("First api call");
           const firstApiResponse = await axios.post(
             "https://demo-api.models.ai4bharat.org/inference/translation/v2",
             {
@@ -199,9 +200,12 @@ const SchemeBot = () => {
         }
 
         // Second API call to Jugalbandi bot
+        console.log("Jugalbandi call");
         const queryString = `You are a helpful assistant who helps with answering questions based on the provided information. If the information asked cannot be found in the text provided, you admit that I can't find the exact information. Always include application links for each scheme. Here is the question: ${responseData}`;
+        console.log(queryString);
         const secondApiResponse = await axios.get(
-          "https://4.240.112.55:8000/query-with-gptindex",
+          "http://4.240.112.55:8000/query-with-gptindex",
+
           {
             params: {
               uuid_number: "6df74548-140e-11ee-9884-0242ac110002",
@@ -213,7 +217,7 @@ const SchemeBot = () => {
           }
         );
         const secondResponseData = secondApiResponse.data.answer;
-
+        console.log("3rd API call");
         // Third API call for language conversion (if necessary)
         let botResponse = "";
         if (selectedOption !== "en") {
