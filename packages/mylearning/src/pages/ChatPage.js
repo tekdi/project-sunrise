@@ -5,9 +5,14 @@ import { useParams } from "react-router-dom";
 const imagePath2 = require("../assets/send.png");
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
+const imagePath3 = require("../assets/mic.png");
 
 const ChatPage = () => {
   const { name, selectedOption, ageOption, topicOption } = useParams();
+  const [buttonClass, setButtonClass] = useState(false);
+  const [recording, setRecording] = useState(false);
+  const [transcript, setTranscript] = useState(null);
+  const recognitionRef = useRef(null);
   const [searchText, setSearchText] = useState("");
   const [messages, setMessages] = useState([]);
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
@@ -23,6 +28,34 @@ const ChatPage = () => {
   let welcomeMessage = "";
 
   //hitesh
+
+  useEffect(() => {
+    recognitionRef.current = new window.webkitSpeechRecognition();
+    recognitionRef.current.continuous = true;
+    recognitionRef.current.interimResults = true;
+
+    recognitionRef.current.onresult = async (event) => {
+      let currentTranscript = "";
+      for (let i = 0; i < event.results.length; i++) {
+        currentTranscript += event.results[i][0].transcript + " ";
+      }
+      currentTranscript = currentTranscript.trim();
+      console.log("Transcript:", currentTranscript);
+      setTranscript(currentTranscript);
+    };
+
+    recognitionRef.current.onerror = (event) => {
+      console.error("Speech recognition error:", event.error);
+      setRecording(false);
+    };
+
+    recognitionRef.current.onend = () => {
+      if (recording) {
+        setRecording(false);
+        sendAudioToAIForBharat();
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const chatContainer = document.getElementById("chatContainer");
@@ -130,6 +163,21 @@ const ChatPage = () => {
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Set the height to match the content
     }
   };
+
+  const handleClick = () => {
+    if (!recording) {
+      recognitionRef.current.start();
+      setRecording(true);
+    } else {
+      recognitionRef.current.stop();
+      setRecording(false);
+      if (transcript) {
+        setSearchText(transcript.trim());
+        setTranscript(null);
+        handleSearch({ type: "click" }); // Trigger handleSearch manually with click event
+      }
+    }
+  };
   return (
     <>
       <div className={styles.container}>
@@ -208,6 +256,22 @@ const ChatPage = () => {
                 height={20}
                 style={{ border: "none" }}
               />
+            </button>
+            <button
+              className={buttonClass ? styles.ripple : null}
+              onClick={() => {
+                setButtonClass(!buttonClass);
+                handleClick();
+              }}
+            >
+              {" "}
+              <img
+                src={imagePath3}
+                width={20}
+                height={20}
+                style={{ border: "none" }}
+              />
+              {recording ? "Stop" : "Click"}
             </button>
           </div>
         </div>
