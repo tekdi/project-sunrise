@@ -24,6 +24,7 @@
     "prettier": "^2.6.0"
   },
   "dependencies": {
+    "@ai4bharat/indic-transliterate": "^1.2.15",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.5",
     "@project-sunbird/client-services": "^6.0.1",

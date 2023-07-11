@@ -2,19 +2,20 @@ import React, { useState, useLayoutEffect, useRef, useEffect } from "react";
 import styles from "./Chatbot.module.css";
 import { useNavigate } from "react-router-dom";
 import { AppBar } from "@shiksha/common-lib";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function Chatbot() {
   const [displayText, setDisplayText] = useState("");
   const navigate = useNavigate();
   const iframeRef = useRef(null);
 
-  const handleButtonClick = () => {
-    if (iframeRef.current) {
-      const iframeContent =
-        iframeRef.current.contentWindow.document.body.innerHTML;
-      console.log(iframeContent);
-    }
-  };
+  // const handleButtonClick = () => {
+  //   if (iframeRef.current) {
+  //     const iframeContent =
+  //       iframeRef.current.contentWindow.document.body.innerHTML;
+  //     console.log(iframeContent);
+  //   }
+  // };
 
   useLayoutEffect(() => {
     const savedText = localStorage.getItem("displayText");
@@ -30,6 +31,10 @@ function Chatbot() {
     }
   }, []);
 
+  const handleBackButton = () => {
+    navigate(-1);
+  };
+
   // const back = () => {
   //   navigate("/studentapp");
   // };
@@ -37,7 +42,12 @@ function Chatbot() {
   return (
     <React.Fragment>
       <AppBar />
-      <h2 className={styles.student}>QR based AI Tool</h2>
+      <div>
+        <h2 className={styles.student} onClick={handleBackButton}>
+          {" "}
+          <ArrowBackIcon style={{ color: "gray" }} /> QR based AI Tool
+        </h2>
+      </div>
       <br></br>
       <div className={styles.text}>Chapter 6</div>
       {/* <div className={styles.text}>{`${displayText}`}</div> */}
@@ -47,7 +57,7 @@ function Chatbot() {
         className={styles.iframe}
         src={displayText}
       ></iframe>
-      <button onClick={handleButtonClick}>Get iframe body</button>
+      {/* <button onClick={handleButtonClick}>Get iframe body</button> */}
       {/* <button className={styles.backbutton} onClick={back}>
         Back
       </button> */}

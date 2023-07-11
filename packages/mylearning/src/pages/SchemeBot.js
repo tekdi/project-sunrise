@@ -5,8 +5,11 @@ import { useParams } from "react-router-dom";
 const imagePath2 = require("../assets/send.png");
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
+import { IndicTransliterate } from "@ai4bharat/indic-transliterate";
+import "@ai4bharat/indic-transliterate/dist/index.css";
 
 const SchemeBot = () => {
+  const [text, setText] = useState("");
   const imagePath3 = require("../assets/mic.png");
   const [buttonClass, setButtonClass] = useState(false);
   const [recording, setRecording] = useState(false);
@@ -354,7 +357,7 @@ const SchemeBot = () => {
           {/* inputext  */}
           <div className={styles.chatinput}>
             <div className={styles.bottomContainer}>
-              <input
+              {/* <input
                 ref={textareaRef}
                 className={styles.bottomInput}
                 placeholder="Enter text here"
@@ -363,6 +366,21 @@ const SchemeBot = () => {
                 rows={1} // Initial rows set to 1
                 // hitesh
                 onKeyDown={handleSearch}
+              /> */}
+              <IndicTransliterate
+                offsetY={-300}
+                ref={textareaRef}
+                className={styles.bottomInput}
+                placeholder="Enter text here"
+                value={searchText}
+                onChange={handleInputChange}
+                rows={1} // Initial rows set to 1
+                // hitesh
+                onKeyDown={handleSearch}
+                onChangeText={(text) => {
+                  setText(text);
+                }}
+                lang={selectedOption}
               />
             </div>
             <div> </div>

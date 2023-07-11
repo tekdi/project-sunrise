@@ -9,7 +9,10 @@
 }
 
 .student {
+  display: flex;
+  align-items: center;
   margin-left: 10px;
+  margin-top: 0px;
   color: #4a86e8;
 }
 

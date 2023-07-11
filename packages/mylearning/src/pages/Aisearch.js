@@ -62,7 +62,6 @@ function Aisearch() {
           style={{ marginTop: "37px" }}
         >
           <span>Teacher</span>
-          <LaunchIcon />
         </button>
       </div>
 
