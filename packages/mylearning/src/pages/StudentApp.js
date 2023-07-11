@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./StudentApp.module.css";
 import { useLayout } from "native-base";
 import LaunchIcon from "@mui/icons-material/Launch";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function StudentApp() {
   const [localqr, setLocalQr] = useState("");
@@ -80,10 +81,19 @@ function StudentApp() {
   const myclick4 = () => {
     window.open("http://139.59.21.40:5001/");
   };
+  const handleBackButton = () => {
+    navigate(-1);
+  };
 
   return (
     <div className={styles.outerdiv}>
-      <h2>Student App</h2>
+      <h2
+        style={{ display: "flex", alignItems: "center" }}
+        onClick={handleBackButton}
+      >
+        {" "}
+        <ArrowBackIcon style={{ color: "gray" }} /> Student App
+      </h2>
       {/* <h3>Dial code : {localqr}</h3> */}
       <div>
         {board}, {studentgrade}, {subject}

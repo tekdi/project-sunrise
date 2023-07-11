@@ -117,7 +117,7 @@ function Teacherqr() {
                 );
               }, 1000);
             }
-            
+
             if (!!error) {
               console.info(error);
             }
