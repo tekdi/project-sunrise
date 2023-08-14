@@ -9416,7 +9416,7 @@ deep-object-diff@^1.1.0:
   resolved "https://registry.npmjs.org/deep-object-diff/-/deep-object-diff-1.1.7.tgz"
   integrity sha512-QkgBca0mL08P6HiOjoqvmm6xOAl2W6CT2+34Ljhg0OeFan8cwlcdq8jrLKsBBuUFAZLsN5b6y491KdKEoSo9lg==
 
-deepmerge@^4.2.2:
+deepmerge@^4.0.0, deepmerge@^4.2.2:
   version "4.2.2"
   resolved "https://registry.npmjs.org/deepmerge/-/deepmerge-4.2.2.tgz"
   integrity sha512-FJ3UgI4gIl+PHZm53knsuSFpE+nESMr7M4v9QcgB7S63Kj/6WqMiFQJpBBYz1Pt+66bZpP3Q7Lye0Oo9MPKEdg==
@@ -14100,6 +14100,11 @@ load-json-file@^6.2.0:
     strip-bom "^4.0.0"
     type-fest "^0.6.0"
 
+load-script@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/load-script/-/load-script-1.0.0.tgz"
+  integrity sha512-kPEjMFtZvwL9TaZo0uZ2ml+Ye9HUMmPwbYRJ324qF9tqMejwykJ5ggTyvzmrbBeapCAbk98BSbTeovHEEP1uCA==
+
 loader-runner@^2.4.0:
   version "2.4.0"
   resolved "https://registry.npmjs.org/loader-runner/-/loader-runner-2.4.0.tgz"
@@ -14571,6 +14576,11 @@ memfs@^3.1.2, memfs@^3.2.2, memfs@^3.4.1:
   integrity sha512-1c9VPVvW5P7I85c35zAdEr1TD5+F11IToIHIlrVIcflfnzPkJa0ZoYEoEdYDP8KgPFoSZ/opDrUsAoZWym3mtw==
   dependencies:
     fs-monkey "1.0.3"
+
+memoize-one@^5.1.1:
+  version "5.2.1"
+  resolved "https://registry.npmjs.org/memoize-one/-/memoize-one-5.2.1.tgz"
+  integrity sha512-zYiwtZUcYyXKo/np96AGZAckk+FWWsUdJ3cHGGmld7+AhvcWmQyGCYUh1hc4Q/pkOhb65dQR/pqCyK0cOaHz4Q==
 
 memoize-one@^6.0.0:
   version "6.0.0"
@@ -17835,6 +17845,17 @@ react-native-web@^0.17.5, react-native-web@^0.17.6:
     normalize-css-color "^1.0.2"
     prop-types "^15.6.0"
 
+react-player@^2.12.0:
+  version "2.12.0"
+  resolved "https://registry.npmjs.org/react-player/-/react-player-2.12.0.tgz"
+  integrity sha512-rymLRz/2GJJD+Wc01S7S+i9pGMFYnNmQibR2gVE3KmHJCBNN8BhPAlOPTGZtn1uKpJ6p4RPLlzPQ1OLreXd8gw==
+  dependencies:
+    deepmerge "^4.0.0"
+    load-script "^1.0.0"
+    memoize-one "^5.1.1"
+    prop-types "^15.7.2"
+    react-fast-compare "^3.0.1"
+
 react-popper-tooltip@^3.1.1:
   version "3.1.1"
   resolved "https://registry.npmjs.org/react-popper-tooltip/-/react-popper-tooltip-3.1.1.tgz"
@@ -18756,6 +18777,47 @@ safe-regex@^1.1.0:
   version "2.1.2"
   resolved "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
+
+"samplemodule@file:D:\\Tekdi\\Projects\\project-sunrise\\packages\\stories":
+  version "0.1.0"
+  resolved "file:packages/stories"
+  dependencies:
+    "@emotion/react" "^11.7.1"
+    "@emotion/styled" "^11.6.0"
+    "@mui/icons-material" "^5.2.4"
+    "@mui/material" "^5.4.0"
+    "@react-navigation/drawer" "^6.1.8"
+    "@shiksha/common-lib" "^1.0.0"
+    "@testing-library/jest-dom" "^5.16.2"
+    "@testing-library/react" "^11.2.7"
+    "@testing-library/user-event" "^12.8.3"
+    axios "^0.24.0"
+    expo-font "^10.0.3"
+    i18next "^21.6.7"
+    moment "^2.29.1"
+    native-base "^3.2.2"
+    react "^17.0.2"
+    react-dom "^17.0.2"
+    react-i18next "^11.15.3"
+    react-native-safe-area-context "^3.3.2"
+    react-native-tab-view "^3.1.1"
+    react-native-web "^0.17.5"
+    react-router-dom "^6.1.1"
+    react-scripts "5.0.0"
+    remixicon-react "^1.0.0"
+    web-vitals "^0.2.4"
+    workbox-background-sync "^5.1.4"
+    workbox-broadcast-update "^5.1.4"
+    workbox-cacheable-response "^5.1.4"
+    workbox-core "^5.1.4"
+    workbox-expiration "^5.1.4"
+    workbox-google-analytics "^5.1.4"
+    workbox-navigation-preload "^5.1.4"
+    workbox-precaching "^5.1.4"
+    workbox-range-requests "^5.1.4"
+    workbox-routing "^5.1.4"
+    workbox-strategies "^5.1.4"
+    workbox-streams "^5.1.4"
 
 sane@^4.0.3:
   version "4.1.0"
