@@ -36,7 +36,7 @@ export default function HomePage({ footerLinks, appName, isQRcodebutton }) {
     window.open("https://doctalk.uniteframework.io/");
   };
   const adaptivelearning = () => {
-    window.open("https://alt-shiksha.uniteframework.io/ ");
+    window.open("https://shiksha.uniteframework.io/api/v1/ ");
   };
   const teacherapp = () => {
     window.open("https://sandbox.shiksha.samagra.io/ ");

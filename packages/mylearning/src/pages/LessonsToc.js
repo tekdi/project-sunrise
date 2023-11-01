@@ -282,7 +282,7 @@ export default function LessonsToc({ footerLinks }) {
                   }
                 }}
                 // public_url="http://localhost:5000"
-                public_url="https://alt-shiksha.uniteframework.io/"
+                public_url="https://shiksha.uniteframework.io/api/v1/"
               />
             </VStack>
           )
