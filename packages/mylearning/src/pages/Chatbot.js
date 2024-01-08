@@ -23,7 +23,8 @@ function Chatbot() {
     if (savedText !== null) {
       // const updatedText = savedText.replace(/\s/g, "%20").toLowerCase();
 
-      let uri = `https://ncfchat.sunbird.org/ncert/ask?q=${savedText}`;
+      let uri = `https://ncfsaarathi.sunbird.org/ncert/ask?q=${savedText}`;
+
       let encoded = uri.replace(/\s/g, "%20").replace(/-/g, "");
 
       setDisplayText(encoded);
